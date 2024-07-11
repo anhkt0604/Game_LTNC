@@ -251,9 +251,6 @@ Game_LTNC_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Game_LTNC_SOURCE_DIR:STATIC=D:/My Code/Game_LTNC
 
-//The directory containing a CMake configuration file for SDL2.
-SDL2_DIR:PATH=C:/MinGW/lib/cmake/SDL2
-
 
 ########################
 # INTERNAL cache entries

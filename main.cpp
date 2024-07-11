@@ -1,5 +1,6 @@
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <SDL.h>
+#include <SDL_image.h>
 using namespace std;
 
 int main(int argc, char* argv[]) {
@@ -9,8 +10,17 @@ int main(int argc, char* argv[]) {
         cout << "SDL initialized!" << endl;
     }
 
-    // show blue screen and close by clicking the close button
-    SDL_Window* window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("GAME", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
+
+    // Set Window Icon
+    SDL_Surface *icon = IMG_Load(R"(D:\My Code\Game_LTNC\res\icon.png)");
+    if (icon == NULL) {
+        cout << "Icon could not be loaded! SDL_Error: " << SDL_GetError() << endl;
+    } else {
+        SDL_SetWindowIcon(window, icon);
+        SDL_FreeSurface(icon);
+    }
+
     if (window == NULL) {
         cout << "Window could not be created! SDL_Error: " << SDL_GetError() << endl;
     } else {
@@ -26,7 +36,9 @@ int main(int argc, char* argv[]) {
                         quit = true;
                     }
                 }
-                SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
+
+                // white color
+                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
                 SDL_RenderClear(renderer);
                 SDL_RenderPresent(renderer);
             }
@@ -38,3 +50,4 @@ int main(int argc, char* argv[]) {
     return 0;
 
 }
+
