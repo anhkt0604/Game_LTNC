@@ -56,6 +56,13 @@ build CMakeFiles/Game_LTNC.dir/main.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_D
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir
 
+build CMakeFiles/Game_LTNC.dir/utils.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/utils.cpp || cmake_object_order_depends_target_Game_LTNC
+  DEP_FILE = CMakeFiles\Game_LTNC.dir\utils.cpp.obj.d
+  FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
+  INCLUDES = -ID:/UET/SDL/include -ID:/UET/SDL_image/include
+  OBJECT_DIR = CMakeFiles\Game_LTNC.dir
+  OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Game_LTNC
@@ -64,7 +71,7 @@ build CMakeFiles/Game_LTNC.dir/main.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_D
 #############################################
 # Link the executable Game_LTNC.exe
 
-build Game_LTNC.exe: CXX_EXECUTABLE_LINKER__Game_LTNC_Debug CMakeFiles/Game_LTNC.dir/main.cpp.obj
+build Game_LTNC.exe: CXX_EXECUTABLE_LINKER__Game_LTNC_Debug CMakeFiles/Game_LTNC.dir/main.cpp.obj CMakeFiles/Game_LTNC.dir/utils.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LD:/UET/SDL/lib/x86   -LD:/UET/SDL_image/lib/x86

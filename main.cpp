@@ -1,9 +1,9 @@
-#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
-using namespace std;
+#include "utils.h"
 
 int main(int argc, char* argv[]) {
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << endl;
     } else {
@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     SDL_Window* window = SDL_CreateWindow("GAME", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN);
 
     // Set Window Icon
-    SDL_Surface *icon = IMG_Load(R"(D:\My Code\Game_LTNC\res\icon.png)");
+    SDL_Surface *icon = IMG_Load((PROJECT_SOURCE_DIR + "res/icon.png").c_str());
     if (icon == NULL) {
         cout << "Icon could not be loaded! SDL_Error: " << SDL_GetError() << endl;
     } else {
