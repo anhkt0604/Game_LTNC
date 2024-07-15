@@ -3,11 +3,17 @@ project(Game_LTNC)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(SDL2_INCLUDE_DIR "D:/UET/SDL/include")
-SET(SDL2_LIB_DIR "D:/UET/SDL/lib/x86")
+#set(SDL2_INCLUDE_DIR "D:/UET/SDL/include")
+#SET(SDL2_LIB_DIR "D:/UET/SDL/lib/x86")
 
-set(SDL_Image_INCLUDE_DIR "D:/UET/SDL_image/include")
-SET(SDL_Image_LIB_DIR "D:/UET/SDL_image/lib/x86")
+#set(SDL_Image_INCLUDE_DIR "D:/UET/SDL_image/include")
+#SET(SDL_Image_LIB_DIR "D:/UET/SDL_image/lib/x86")
+
+SET(SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL/include)
+SET(SDL2_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL/lib/x86)
+
+SET(SDL_Image_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL_image/include)
+SET(SDL_Image_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/SDL_image/lib/x86)
 
 include_directories(${SDL2_INCLUDE_DIR})
 link_directories(${SDL2_LIB_DIR})
@@ -15,8 +21,8 @@ link_directories(${SDL2_LIB_DIR})
 include_directories(${SDL_Image_INCLUDE_DIR})
 link_directories(${SDL_Image_LIB_DIR})
 
-add_executable(Game_LTNC main.cpp
-        utils.h
-        utils.cpp)
+add_executable(Game_LTNC src/main.cpp
+        src/utils/utils.h
+        src/utils/utils.cpp)
 
 target_link_libraries(Game_LTNC SDL2main SDL2 SDL2_image)

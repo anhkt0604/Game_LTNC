@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
-#include "utils.h"
+#include "utils/utils.h"
+
+const string PROJECT_SOURCE_DIR = getPath();
 
 int main(int argc, char* argv[]) {
 
