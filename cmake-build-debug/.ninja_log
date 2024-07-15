@@ -1,8 +1,9 @@
 # ninja log v5
-617	847	7427254914339175	Game_LTNC.exe	7c20ce82bbc11b11
-1	203	7427258509662914	build.ninja	71b2ec64a3f482a1
-3	3999	7427258239247817	CMakeFiles/Game_LTNC.dir/src/utils/utils.cpp.obj	1439947f13f75b2a
-11	4004	7427258239247817	CMakeFiles/Game_LTNC.dir/src/main.cpp.obj	aaed6ee35ab0f7ef
-15	658	7427258531194829	CMakeFiles/Game_LTNC.dir/src/utils/utils.cpp.obj	b066c8bcce00e02d
-7	712	7427258531746002	CMakeFiles/Game_LTNC.dir/src/main.cpp.obj	cf9d7ef967a06df0
-712	921	7427258533775849	Game_LTNC.exe	7c20ce82bbc11b11
+528	678	7427584520589114	Game_LTNC.exe	7c02d016becbff7c
+7	414	7427579509676556	CMakeFiles/Game_LTNC.dir/src/gameObject.cpp.obj	dc3752e1ce06d0a1
+2	202	7427585762269749	build.ninja	71b2ec64a3f482a1
+3	743	7427314121898198	CMakeFiles/Game_LTNC.dir/src/utils/utils.cpp.obj	b066c8bcce00e02d
+9	100	7427583553033691	CMakeFiles/Game_LTNC.dir/src/utils.cpp.obj	f650f5cb0bbdd987
+1	528	7427584519143486	CMakeFiles/Game_LTNC.dir/src/main.cpp.obj	cf9d7ef967a06df0
+2	542	7427586515586931	CMakeFiles/Game_LTNC.dir/src/main.cpp.obj	cf9d7ef967a06df0
+542	708	7427586517222931	Game_LTNC.exe	1fb3027245eeb67b

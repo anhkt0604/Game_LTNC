@@ -22,7 +22,8 @@ include_directories(${SDL_Image_INCLUDE_DIR})
 link_directories(${SDL_Image_LIB_DIR})
 
 add_executable(Game_LTNC src/main.cpp
-        src/utils/utils.h
-        src/utils/utils.cpp)
+        src/header/main.h
+        src/gameObject.cpp
+        src/header/gameObject.h)
 
 target_link_libraries(Game_LTNC SDL2main SDL2 SDL2_image)
