@@ -1,16 +1,44 @@
-#include "header/main.h"
+#include "header/utils.h"
+#include "header/gameObject.h"
+#include "header/map.h"
 
-string getPath() {
-    char buffer[MAX_PATH];
-    GetModuleFileNameA(NULL, buffer, MAX_PATH);
-    string::size_type pos = string(buffer).find("cmake-build-debug");
-    string path = string(buffer).substr(0, pos);
-    for (int i = 0; i < path.size(); i++) {
-        if (path[i] == '\\') {
-            path[i] = '/';
-        }
+bool init();
+
+gameObject gBackground;
+bool loadBackground();
+
+void close();
+
+int main(int argc, char* argv[]) {
+    if (!init()) {
+        return -1;
     }
-    return path;
+    if (!loadBackground()) {
+        return -1;
+    }
+
+    GameMap game_map;
+    game_map.LoadMap((char*)MAP.c_str());
+    game_map.LoadTiles(gRenderer);
+
+    bool quit = false;
+    while(!quit) {
+        while (SDL_PollEvent(&gEvent) != 0) {
+            if (gEvent.type == SDL_QUIT) {
+                quit = true;
+            }
+        }
+        SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR,
+                               RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+        SDL_RenderClear(gRenderer);
+        gBackground.Render(gRenderer, NULL);
+        game_map.DrawMap(gRenderer);
+
+        SDL_RenderPresent(gRenderer);
+    }
+
+    close();
+    return 0;
 }
 
 bool init() {
@@ -89,32 +117,5 @@ void close() {
     // Quit SDL subsystems
     IMG_Quit();
     SDL_Quit();
-}
-
-int main(int argc, char* argv[]) {
-    if (!init()) {
-        return -1;
-    }
-    if (!loadBackground()) {
-        return -1;
-    }
-
-    bool quit = false;
-    while(!quit) {
-        while (SDL_PollEvent(&gEvent) != 0) {
-            if (gEvent.type == SDL_QUIT) {
-                quit = true;
-            }
-        }
-        SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR,
-                               RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
-        SDL_RenderClear(gRenderer);
-        gBackground.Render(gRenderer, NULL);
-        SDL_RenderPresent(gRenderer);
-    }
-
-    close();
-
-    return 0;
 }
 

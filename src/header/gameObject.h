@@ -1,10 +1,7 @@
 #ifndef GAME_LTNC_GAMEOBJECT_H
 #define GAME_LTNC_GAMEOBJECT_H
 
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <string>
+#include "utils.h"
 
 using namespace std;
 
@@ -26,6 +23,5 @@ protected:
     SDL_Texture* object;
     SDL_Rect rect;
 };
-
 
 #endif //GAME_LTNC_GAMEOBJECT_H
