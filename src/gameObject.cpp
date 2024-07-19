@@ -19,8 +19,7 @@ bool gameObject::LoadImg(const string &path, SDL_Renderer *screen) {
         return false;
     }
 
-    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 255, 255, 255));
-//    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
+    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
     object = SDL_CreateTextureFromSurface(screen, loadedSurface);
     if (object == NULL) {
         cout << "Unable to create texture from " << path.c_str() << "! SDL Error: " << SDL_GetError() << endl;

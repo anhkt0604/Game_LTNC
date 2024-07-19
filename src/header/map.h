@@ -3,7 +3,7 @@
 
 #include "utils.h"
 #include "gameObject.h"
-#include <stdio.h>
+#include <cstdio>
 
 #define MAX_TILES 20
 

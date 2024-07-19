@@ -1,6 +1,7 @@
 #include "header/utils.h"
 #include "header/gameObject.h"
 #include "header/map.h"
+#include "header/character.h"
 
 bool init();
 
@@ -8,6 +9,7 @@ gameObject gBackground;
 bool loadBackground();
 
 void close();
+void process();
 
 int main(int argc, char* argv[]) {
     if (!init()) {
@@ -17,25 +19,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    GameMap game_map;
-    game_map.LoadMap((char*)MAP.c_str());
-    game_map.LoadTiles(gRenderer);
-
-    bool quit = false;
-    while(!quit) {
-        while (SDL_PollEvent(&gEvent) != 0) {
-            if (gEvent.type == SDL_QUIT) {
-                quit = true;
-            }
-        }
-        SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR,
-                               RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
-        SDL_RenderClear(gRenderer);
-        gBackground.Render(gRenderer, NULL);
-        game_map.DrawMap(gRenderer);
-
-        SDL_RenderPresent(gRenderer);
-    }
+    process();
 
     close();
     return 0;
@@ -119,3 +103,33 @@ void close() {
     SDL_Quit();
 }
 
+void process() {
+    GameMap game_map;
+    game_map.LoadMap((char*)MAP.c_str());
+    game_map.LoadTiles(gRenderer);
+
+    character player;
+    player.LoadImg(PROJECT_SOURCE_DIR + "res/player_right.png", gRenderer);
+    player.set_clips();
+
+    bool quit = false;
+    while(!quit) {
+        while (SDL_PollEvent(&gEvent) != 0) {
+            if (gEvent.type == SDL_QUIT) {
+                quit = true;
+            }
+            player.HandleInputAction(gEvent, gRenderer);
+        }
+
+        SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR,
+                               RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
+        SDL_RenderClear(gRenderer);
+
+        gBackground.Render(gRenderer, NULL);
+        game_map.DrawMap(gRenderer);
+
+        player.Render(gRenderer);
+
+        SDL_RenderPresent(gRenderer);
+    }
+}
