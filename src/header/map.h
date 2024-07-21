@@ -21,6 +21,9 @@ public:
     void LoadMap(char* path);
     void LoadTiles(SDL_Renderer* renderer);
     void DrawMap(SDL_Renderer* renderer);
+
+    Map getMap() { return gMap; }
+    void setMap(Map &map) { gMap = map; }
 //    void render();
 //    void free();
 //    int getWidth();

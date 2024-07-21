@@ -18,6 +18,8 @@ public:
     void Render(SDL_Renderer* screen);
     void HandleInputAction(SDL_Event events, SDL_Renderer* screen);
     void set_clips();
+    void DoPlayer(Map& map_data);
+    void UpdateMap(const int x, const int y) { map_x = x; map_y = y; }
 
 private:
     float x_val;
@@ -26,10 +28,16 @@ private:
     float y_pos;
     int width_frame;
     int height_frame;
-    SDL_Rect frame_clip[8];
+    int map_x;
+    int map_y;
+    SDL_Rect frame_clip[FRAME_NUMBER];
     Input input_type;
     unsigned int frame;
     int status;
+    bool on_ground;
+
+    void CheckToMap(Map &map_data);
+    void CenterEntityOnMap(Map &map_data);
 };
 
 

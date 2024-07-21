@@ -32,9 +32,15 @@ const int SCREEN_BPP = 32;
 
 const int RENDER_DRAW_COLOR = 0xFF;
 
+#define BLANK_TILE 0
 #define TILE_SIZE 64
 #define MAX_MAP_X 400
 #define MAX_MAP_Y 10
+#define FRAME_NUMBER 8
+
+#define GRAVITY_SPEED 0.8
+#define MAX_FALL_SPEED 10
+#define PLAYER_SPEED 5
 
 typedef struct Input {
     int left;

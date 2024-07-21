@@ -126,10 +126,16 @@ void process() {
         SDL_RenderClear(gRenderer);
 
         gBackground.Render(gRenderer, NULL);
-        game_map.DrawMap(gRenderer);
+//        game_map.DrawMap(gRenderer);
 
+        Map map_data = game_map.getMap();
+        player.UpdateMap(map_data.start_x, map_data.start_y);
+        player.DoPlayer(map_data);
         player.Render(gRenderer);
 
+        game_map.setMap(map_data);
+        game_map.DrawMap(gRenderer);
         SDL_RenderPresent(gRenderer);
+
     }
 }
