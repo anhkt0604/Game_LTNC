@@ -137,5 +137,6 @@ void process() {
         game_map.DrawMap(gRenderer);
         SDL_RenderPresent(gRenderer);
 
+        SDL_Delay(1000/90);
     }
 }

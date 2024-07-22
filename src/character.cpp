@@ -36,7 +36,7 @@ void character::Render(SDL_Renderer *screen) {
         frame = 0;
     }
 
-    if (frame >= 8) {
+    if (frame >= FRAME_NUMBER) {
         frame = 0;
     }
 
@@ -93,7 +93,6 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
 
 void character::set_clips() {
 
-    // NUMBER OF FRAME PER SECOND: 12
     if (width_frame > 0 && height_frame > 0) {
         for (int i = 0; i < FRAME_NUMBER; i++) {
             frame_clip[i].x = i * width_frame;
