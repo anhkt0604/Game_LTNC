@@ -29,6 +29,8 @@ add_executable(Game_LTNC src/main.cpp
         src/header/utils.h
         src/utils.cpp
         src/character.cpp
-        src/header/character.h)
+        src/header/character.h
+        src/timer.cpp
+        src/header/timer.h)
 
 target_link_libraries(Game_LTNC SDL2main SDL2 SDL2_image)

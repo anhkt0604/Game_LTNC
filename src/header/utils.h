@@ -31,6 +31,7 @@ const int COLOR_KEY_B = 255;
 const int SCREEN_BPP = 32;
 
 const int RENDER_DRAW_COLOR = 0xFF;
+const int FRAME_PER_SECOND = 30;
 
 #define BLANK_TILE 0
 #define TILE_SIZE 64

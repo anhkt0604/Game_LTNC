@@ -2,11 +2,15 @@
 #include "header/gameObject.h"
 #include "header/map.h"
 #include "header/character.h"
+#include "header/timer.h"
 
 bool init();
 
 gameObject gBackground;
 bool loadBackground();
+
+// Implement timer (fps)
+timer fps_timer;
 
 void close();
 void process();
@@ -114,6 +118,7 @@ void process() {
 
     bool quit = false;
     while(!quit) {
+        fps_timer.start();
         while (SDL_PollEvent(&gEvent) != 0) {
             if (gEvent.type == SDL_QUIT) {
                 quit = true;
@@ -137,6 +142,10 @@ void process() {
         game_map.DrawMap(gRenderer);
         SDL_RenderPresent(gRenderer);
 
-        SDL_Delay(1000/90);
+        int real_time = fps_timer.get_ticks();
+        int frame_time = 1000 / FRAME_PER_SECOND;
+        if (real_time < frame_time) {
+            SDL_Delay(frame_time - real_time);
+        }
     }
 }
