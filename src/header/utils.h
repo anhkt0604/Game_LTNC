@@ -31,7 +31,7 @@ const int COLOR_KEY_B = 255;
 const int SCREEN_BPP = 32;
 
 const int RENDER_DRAW_COLOR = 0xFF;
-const int FRAME_PER_SECOND = 30;
+const int FRAME_PER_SECOND = 25;
 
 #define BLANK_TILE 0
 #define TILE_SIZE 64
@@ -39,15 +39,16 @@ const int FRAME_PER_SECOND = 30;
 #define MAX_MAP_Y 10
 #define FRAME_NUMBER 6
 
-#define GRAVITY_SPEED 0.8
+#define GRAVITY_SPEED 1
 #define MAX_FALL_SPEED 10
-#define PLAYER_SPEED 5
+#define PLAYER_SPEED 15
+#define JUMP_SPEED 15
+
+#define START_GAME_Y_POS 200
 
 typedef struct Input {
     int left;
     int right;
-    int up;
-    int down;
     int jump;
 };
 

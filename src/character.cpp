@@ -5,7 +5,7 @@ character::character() {
     x_val = 0;
     y_val = 0;
     x_pos = 0;
-    y_pos = 0;
+    y_pos = START_GAME_Y_POS;
     width_frame = 0;
     height_frame = 0;
     status = -1;
@@ -13,10 +13,9 @@ character::character() {
     input_type.left = 0;
     input_type.right = 0;
     input_type.jump = 0;
-    input_type.up = 0;
-    input_type.down = 0;
     map_x = 0;
     map_y = 0;
+    come_back_time = 0;
 }
 
 character::~character() {
@@ -40,12 +39,14 @@ void character::Render(SDL_Renderer *screen) {
         frame = 0;
     }
 
-    rect.x = x_pos - map_x;
-    rect.y = y_pos - map_y;
+    if (come_back_time == 0) {
+        rect.x = x_pos - map_x;
+        rect.y = y_pos - map_y;
 
-    SDL_Rect* current_clip = &frame_clip[frame];
-    SDL_Rect renderQuad = {rect.x, rect.y, width_frame, height_frame};
-    SDL_RenderCopy(screen, object, current_clip, &renderQuad);
+        SDL_Rect* current_clip = &frame_clip[frame];
+        SDL_Rect renderQuad = {rect.x, rect.y, width_frame, height_frame};
+        SDL_RenderCopy(screen, object, current_clip, &renderQuad);
+    }
 }
 
 bool character::LoadImg(const string &path, SDL_Renderer *screen) {
@@ -74,6 +75,9 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
                 input_type.left = 1;
                 input_type.right = 0;
                 break;
+            case SDLK_UP:
+                input_type.jump = 1;
+                break;
             default:
                 break;
         }
@@ -84,6 +88,9 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
                 break;
             case SDLK_LEFT:
                 input_type.left = 0;
+                break;
+            case SDLK_UP:
+                input_type.jump = 0;
                 break;
             default:
                 break;
@@ -104,20 +111,48 @@ void character::set_clips() {
 }
 
 void character::DoPlayer(Map &map_data) {
-    x_val = 0;
-    y_val += GRAVITY_SPEED;
-    if (y_val >= MAX_FALL_SPEED) {
-        y_val = MAX_FALL_SPEED;
+    if (come_back_time == 0) {
+        x_val = 0;
+        y_val += GRAVITY_SPEED;
+        if (y_val >= MAX_FALL_SPEED) {
+            y_val = MAX_FALL_SPEED;
+        }
+
+        if (input_type.left == 1) {
+            x_val -= PLAYER_SPEED;
+        } else if (input_type.right == 1) {
+            x_val += PLAYER_SPEED;
+        }
+
+        if (input_type.jump == 1) {
+            if (on_ground) {
+                y_val = - JUMP_SPEED;
+            }
+            on_ground = false;
+            input_type.jump = 0;
+        }
+
+        CheckToMap(map_data);
+        CenterEntityOnMap(map_data);
     }
 
-    if (input_type.left == 1) {
-        x_val -= PLAYER_SPEED;
-    } else if (input_type.right == 1) {
-        x_val += PLAYER_SPEED;
-    }
+    if (come_back_time > 0) {
+        come_back_time--;
+        if (come_back_time == 0) {
 
-    CheckToMap(map_data);
-    CenterEntityOnMap(map_data);
+            // after die, come back the position before die
+            if (x_pos > 0) {
+                x_pos -= 6* TILE_SIZE;     // 6 tiles
+            } else {
+                x_pos = 0;
+            }
+            y_pos = START_GAME_Y_POS;
+            x_val = 0;
+            y_val = 0;
+//            map_x = 0;
+//            map_y = 0;
+        }
+    }
 }
 
 void character::CheckToMap(Map &map_data) {
@@ -196,6 +231,12 @@ void character::CenterEntityOnMap(Map &map_data) {
         map_data.start_y = 0;
     } else if (map_data.start_y + SCREEN_HEIGHT >= map_data.max_y) {
         map_data.start_y = map_data.max_y - SCREEN_HEIGHT;
+    }
+
+    if (y_pos > map_data.max_y) {
+        come_back_time = 60;
+    } else {
+        come_back_time = 0;
     }
 }
 
