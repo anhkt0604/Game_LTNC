@@ -3,8 +3,9 @@
 #include "header/map.h"
 #include "header/character.h"
 #include "header/timer.h"
+#include "header/threat.h"
 
-bool init();
+bool initSDL();
 
 gameObject gBackground;
 bool loadBackground();
@@ -14,9 +15,10 @@ timer fps_timer;
 
 void close();
 void process();
+vector <threat*> MakeThreatsList();
 
 int main(int argc, char* argv[]) {
-    if (!init()) {
+    if (!initSDL()) {
         return -1;
     }
     if (!loadBackground()) {
@@ -29,7 +31,7 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-bool init() {
+bool initSDL() {
 
     // Initialization flag
     bool success = true;
@@ -113,8 +115,10 @@ void process() {
     game_map.LoadTiles(gRenderer);
 
     character player;
-    player.LoadImg(PROJECT_SOURCE_DIR + "res/player_right.png", gRenderer);
+    player.LoadImg(PLAYER_RIGHT, gRenderer);
     player.set_clips();
+
+    vector<threat*> list_threats = MakeThreatsList();
 
     bool quit = false;
     while(!quit) {
@@ -134,12 +138,24 @@ void process() {
 //        game_map.DrawMap(gRenderer);
 
         Map map_data = game_map.getMap();
+
         player.UpdateMap(map_data.start_x, map_data.start_y);
         player.DoPlayer(map_data);
         player.Render(gRenderer);
 
         game_map.setMap(map_data);
         game_map.DrawMap(gRenderer);
+
+        // Render threats
+        for (int i = 0; i < list_threats.size(); i++) {
+            threat* p_threat = list_threats.at(i);
+            if (p_threat != NULL) {
+                p_threat->SetMap(map_data.start_x, map_data.start_y);
+                p_threat->DoThreat(map_data);
+                p_threat->Render(gRenderer);
+            }
+        }
+
         SDL_RenderPresent(gRenderer);
 
         int real_time = fps_timer.get_ticks();
@@ -148,4 +164,25 @@ void process() {
             SDL_Delay(frame_time - real_time);
         }
     }
+}
+
+vector <threat*> MakeThreatsList() {
+    vector <threat*> list_threats;
+    threat* threat_obj = new threat[20];
+    for (int i = 0; i < 20; i++) {
+        threat* p_threat = (threat_obj + i);
+        if (p_threat == NULL) {
+            cout << "Memory allocation failed!" << endl;
+            return list_threats;
+        } else {
+            p_threat->LoadImg(THREAT, gRenderer);
+            p_threat->set_clips();
+            p_threat->setX_pos(700 + i * 1200);
+            p_threat->setY_pos(250);
+
+            list_threats.push_back(p_threat);
+        }
+    }
+
+    return list_threats;
 }

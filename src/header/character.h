@@ -10,11 +10,9 @@ public:
     ~character();
 
     enum MoveType {
-        RIGHT = 0,
-        LEFT = 1,
-        UP = 2,
-        DOWN = 3,
-        IDLE = 4
+        IDLE = 0,
+        RIGHT = 1,
+        LEFT = 2,
     };
 
     bool LoadImg(const string& path, SDL_Renderer* screen) override;
@@ -23,13 +21,14 @@ public:
     void set_clips();
     void DoPlayer(Map& map_data);
     void UpdateMap(const int x, const int y) { map_x = x; map_y = y; }
+    void UpdatePlayerImage(SDL_Renderer* screen);
 
 private:
     float x_val, y_val;
     float x_pos, y_pos;
     int width_frame, height_frame;
     int map_x, map_y;
-    SDL_Rect frame_clip[FRAME_NUMBER];
+    SDL_Rect frame_clip[PLAYER_FRAME_NUMBER];
     Input input_type;
     unsigned int frame;
     int status;

@@ -8,7 +8,7 @@ character::character() {
     y_pos = START_GAME_Y_POS;
     width_frame = 0;
     height_frame = 0;
-    status = -1;
+    status = IDLE;
     on_ground = false;
     input_type.left = 0;
     input_type.right = 0;
@@ -23,11 +23,7 @@ character::~character() {
 }
 
 void character::Render(SDL_Renderer *screen) {
-    if (status == RIGHT) {
-        LoadImg(PROJECT_SOURCE_DIR + "res/player_right.png", screen);
-    } else if (status == LEFT) {
-        LoadImg(PROJECT_SOURCE_DIR + "res/player_left.png", screen);
-    }
+    UpdatePlayerImage(screen);
 
     if (input_type.left == 1 || input_type.right == 1) {
         frame++;
@@ -35,7 +31,7 @@ void character::Render(SDL_Renderer *screen) {
         frame = 0;
     }
 
-    if (frame >= FRAME_NUMBER) {
+    if (frame >= PLAYER_FRAME_NUMBER) {
         frame = 0;
     }
 
@@ -52,7 +48,7 @@ void character::Render(SDL_Renderer *screen) {
 bool character::LoadImg(const string &path, SDL_Renderer *screen) {
     bool result = gameObject::LoadImg(path, screen);
     if (result) {
-        width_frame = rect.w / FRAME_NUMBER;
+        width_frame = rect.w / PLAYER_FRAME_NUMBER;
         height_frame = rect.h;
 //        frame_clip[0].x = 0;
 //        frame_clip[0].y = 0;
@@ -69,11 +65,13 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
                 status = RIGHT;
                 input_type.right = 1;
                 input_type.left = 0;
+                UpdatePlayerImage(screen);
                 break;
             case SDLK_LEFT:
                 status = LEFT;
                 input_type.left = 1;
                 input_type.right = 0;
+                UpdatePlayerImage(screen);
                 break;
             case SDLK_UP:
                 input_type.jump = 1;
@@ -101,7 +99,7 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
 void character::set_clips() {
 
     if (width_frame > 0 && height_frame > 0) {
-        for (int i = 0; i < FRAME_NUMBER; i++) {
+        for (int i = 0; i < PLAYER_FRAME_NUMBER; i++) {
             frame_clip[i].x = i * width_frame;
             frame_clip[i].y = 0;
             frame_clip[i].w = width_frame;
@@ -139,10 +137,14 @@ void character::DoPlayer(Map &map_data) {
     if (come_back_time > 0) {
         come_back_time--;
         if (come_back_time == 0) {
-
+            on_ground = false;
             // after die, come back the position before die
             if (x_pos > 0) {
                 x_pos -= 6* TILE_SIZE;     // 6 tiles
+                // NEW IDEA: check if x_pos is a hole or not, if yes, move to the left until x_pos is not a hole
+//                while (map_data.tile[MAX_MAP_Y][ (int) x_pos / TILE_SIZE] != BLANK_TILE) {
+//                    x_pos -= TILE_SIZE;
+//                }
             } else {
                 x_pos = 0;
             }
@@ -199,6 +201,9 @@ void character::CheckToMap(Map &map_data) {
                 y_pos -= (height_frame + 1);
                 y_val = 0;
                 on_ground = true;
+                if (status == IDLE) {
+                    status = RIGHT;
+                }
             }
         } else if (y_val < 0) {
             if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y1][x2] != BLANK_TILE) {
@@ -234,9 +239,31 @@ void character::CenterEntityOnMap(Map &map_data) {
     }
 
     if (y_pos > map_data.max_y) {
-        come_back_time = 60;
+        come_back_time = 30;
     } else {
         come_back_time = 0;
+    }
+}
+
+void character::UpdatePlayerImage(SDL_Renderer *screen) {
+    if (on_ground) {
+        if (input_type.left == 1) {
+            status = LEFT;
+        } else if (input_type.right == 1) {
+            status = RIGHT;
+        }
+
+        if (status == RIGHT) {
+            LoadImg(PLAYER_RIGHT, screen);
+        } else if (status == LEFT) {
+            LoadImg(PLAYER_LEFT, screen);
+        }
+    } else {  // Jump
+//        if (status == RIGHT) {
+//            LoadImg(PLAYER_JUMP_RIGHT, screen);
+//        } else if (status == LEFT) {
+//            LoadImg(PLAYER_JUMP_LEFT, screen);
+//        }
     }
 }
 

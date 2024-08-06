@@ -6,6 +6,7 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <vector>
 using namespace std;
 
 string getPath();
@@ -14,6 +15,9 @@ const string PROJECT_SOURCE_DIR = getPath();
 const string ICON = PROJECT_SOURCE_DIR + "res/icon.png";
 const string BACKGROUND = PROJECT_SOURCE_DIR + "res/background.png";
 const string MAP = PROJECT_SOURCE_DIR + "res/map/map01.dat";
+const string PLAYER_RIGHT = PROJECT_SOURCE_DIR + "res/player_right.png";
+const string PLAYER_LEFT = PROJECT_SOURCE_DIR + "res/player_left.png";
+const string THREAT = PROJECT_SOURCE_DIR + "res/threat.png";
 
 static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gRenderer = NULL;
@@ -37,12 +41,13 @@ const int FRAME_PER_SECOND = 25;
 #define TILE_SIZE 64
 #define MAX_MAP_X 400
 #define MAX_MAP_Y 10
-#define FRAME_NUMBER 6
+#define PLAYER_FRAME_NUMBER 6
+#define THREAT_FRAME_NUMBER 8
 
 #define GRAVITY_SPEED 1
 #define MAX_FALL_SPEED 10
 #define PLAYER_SPEED 15
-#define JUMP_SPEED 15
+#define JUMP_SPEED 20
 
 #define START_GAME_Y_POS 200
 
