@@ -22,7 +22,9 @@ character::~character() {
 
 }
 
+
 void character::Render(SDL_Renderer *screen) {
+
     UpdatePlayerImage(screen);
 
     if (input_type.left == 1 || input_type.right == 1) {
@@ -266,4 +268,15 @@ void character::UpdatePlayerImage(SDL_Renderer *screen) {
 //        }
     }
 }
+
+SDL_Rect character::GetRectFrame() {
+    SDL_Rect result;
+    result.x = rect.x;
+    result.y = rect.y;
+    result.w = width_frame;
+    result.h = height_frame;
+    return result;
+}
+
+
 

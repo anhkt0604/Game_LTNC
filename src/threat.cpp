@@ -10,6 +10,11 @@ threat::threat() {
     come_back_time = 0;
     on_ground = false;
     frame = 0;
+
+    animation_a = 0;
+    animation_b = 0;
+    input_type.left = 1;
+    type_move = STATIC_THREAT;
 }
 
 threat::~threat() {
@@ -55,20 +60,18 @@ void threat::DoThreat(Map &map_data) {
         x_val = 0;
         y_val += GRAVITY_SPEED;
         if (y_val >= MAX_FALL_SPEED) y_val = MAX_FALL_SPEED;   // threat dung im 1 cho
+
+        if (input_type.left == 1) {
+            x_val -= PLAYER_SPEED;     // Note: add new constant THREAT_SPEED?
+        } else if (input_type.right == 1) {
+            x_val += PLAYER_SPEED;     // Note: add new constant THREAT_SPEED?
+        }
+
         CheckToMap(map_data);
     } else if (come_back_time > 0) {
         come_back_time--;
         if (come_back_time == 0) {
-            x_val = 0;
-            y_val = 0;
-
-            if (x_pos > 4 * TILE_SIZE) {
-                x_pos -= 4 * TILE_SIZE;
-            } else {
-                x_pos = 0;
-            }
-            y_pos = 0;
-            come_back_time = 0;
+            InitThreat();
         }
     }
 }
@@ -136,4 +139,44 @@ void threat::CheckToMap(Map &map_data) {
             x_pos = MAX_MAP_X * TILE_SIZE - width_frame;
         }
 
+}
+
+void threat::ImpMoveType(SDL_Renderer *screen) {
+    if (type_move == STATIC_THREAT) {
+        // ?
+    } else {
+        if (on_ground == true) {
+
+            if (x_pos > animation_b) {
+                input_type.left = 1;
+                input_type.right = 0;
+                LoadImg(THREAT, screen);  // change to threat left image
+            } else if (x_pos < animation_a) {
+                input_type.left = 0;
+                input_type.right = 1;
+                LoadImg(THREAT, screen); // change to threat right image
+            }
+
+        } else {
+            if (input_type.left == 1) {
+                LoadImg(THREAT, screen); // change to threat left image
+            }
+        }
+    }
+}
+
+void threat::InitThreat() {
+    x_val = 0;
+    y_val = 0;
+
+    if (x_pos > 4 * TILE_SIZE) {
+        x_pos -= 4 * TILE_SIZE;
+        animation_a -= 4 * TILE_SIZE;
+        animation_b -= 4 * TILE_SIZE;
+    } else {
+        x_pos = 0;
+    }
+    y_pos = 0;
+    come_back_time = 0;
+    input_type.left = 1;
 }

@@ -151,8 +151,14 @@ void process() {
             threat* p_threat = list_threats.at(i);
             if (p_threat != NULL) {
                 p_threat->SetMap(map_data.start_x, map_data.start_y);
+                p_threat->ImpMoveType(gRenderer);
                 p_threat->DoThreat(map_data);
                 p_threat->Render(gRenderer);
+
+                // Check collision
+                if (utils::CheckCollision(player.GetRectFrame(), p_threat->GetRect())) {
+                    cout << "Collision!" << endl;
+                }
             }
         }
 
@@ -168,6 +174,29 @@ void process() {
 
 vector <threat*> MakeThreatsList() {
     vector <threat*> list_threats;
+
+    threat* dynamic_threat = new threat[20];
+    for (int i = 0; i < 20; i++) {
+        threat* p_threat = (dynamic_threat + i);
+        if (p_threat == NULL) {
+            cout << "Memory allocation failed!" << endl;
+            return list_threats;
+        } else {
+            p_threat->LoadImg(THREAT, gRenderer);  // Load image threat left?
+            p_threat->set_clips();
+            p_threat->set_type_move(threat::MoveType::MOVE_THREAT);
+
+            p_threat->setX_pos(500 + i * 500);
+            p_threat->setY_pos(200);
+
+            int pos1 = p_threat->getX_pos() - 60;
+            int pos2 = p_threat->getX_pos() + 60;
+            p_threat->setAnimationPos(pos1, pos2);
+
+            list_threats.push_back(p_threat);
+        }
+    }
+
     threat* threat_obj = new threat[20];
     for (int i = 0; i < 20; i++) {
         threat* p_threat = (threat_obj + i);
@@ -179,6 +208,8 @@ vector <threat*> MakeThreatsList() {
             p_threat->set_clips();
             p_threat->setX_pos(700 + i * 1200);
             p_threat->setY_pos(250);
+            p_threat->set_type_move(threat::MoveType::STATIC_THREAT);
+            p_threat->setInputLeft(0);
 
             list_threats.push_back(p_threat);
         }

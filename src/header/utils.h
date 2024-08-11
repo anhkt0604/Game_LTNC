@@ -15,8 +15,10 @@ const string PROJECT_SOURCE_DIR = getPath();
 const string ICON = PROJECT_SOURCE_DIR + "res/icon.png";
 const string BACKGROUND = PROJECT_SOURCE_DIR + "res/background.png";
 const string MAP = PROJECT_SOURCE_DIR + "res/map/map01.dat";
-const string PLAYER_RIGHT = PROJECT_SOURCE_DIR + "res/player_right.png";
-const string PLAYER_LEFT = PROJECT_SOURCE_DIR + "res/player_left.png";
+//const string PLAYER_RIGHT = PROJECT_SOURCE_DIR + "res/player_right.png";
+//const string PLAYER_LEFT = PROJECT_SOURCE_DIR + "res/player_left.png";
+const string PLAYER_RIGHT = PROJECT_SOURCE_DIR + "res/ball.png";
+const string PLAYER_LEFT = PROJECT_SOURCE_DIR + "res/ball.png";
 const string THREAT = PROJECT_SOURCE_DIR + "res/threat.png";
 
 static SDL_Window* gWindow = NULL;
@@ -41,7 +43,7 @@ const int FRAME_PER_SECOND = 25;
 #define TILE_SIZE 64
 #define MAX_MAP_X 400
 #define MAX_MAP_Y 10
-#define PLAYER_FRAME_NUMBER 6
+#define PLAYER_FRAME_NUMBER 1
 #define THREAT_FRAME_NUMBER 8
 
 #define GRAVITY_SPEED 1
@@ -65,5 +67,9 @@ typedef struct Map {
     int tile[MAX_MAP_Y][MAX_MAP_X];
     char* file_name;
 };
+
+namespace utils {
+    bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
+}
 
 #endif //GAME_LTNC_UTILS_H

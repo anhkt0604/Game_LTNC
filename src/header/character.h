@@ -23,6 +23,8 @@ public:
     void UpdateMap(const int x, const int y) { map_x = x; map_y = y; }
     void UpdatePlayerImage(SDL_Renderer* screen);
 
+    SDL_Rect GetRectFrame();
+
 private:
     float x_val, y_val;
     float x_pos, y_pos;
@@ -37,6 +39,7 @@ private:
 
     void CheckToMap(Map &map_data);
     void CenterEntityOnMap(Map &map_data);
+
 };
 
 

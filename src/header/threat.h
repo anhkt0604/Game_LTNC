@@ -9,6 +9,11 @@ public:
     threat();
     ~threat();
 
+    enum MoveType {
+        STATIC_THREAT = 0,
+        MOVE_THREAT = 1,
+    };
+
     void setX_val(const float& xVal) {x_val = xVal;}
     void setY_val(const float& yVal) {y_val = yVal;}
 
@@ -28,6 +33,12 @@ public:
     void DoThreat(Map& map_data);
     void CheckToMap(Map& map_data);
 
+    void set_type_move(const int& type) {type_move = type;}
+    void setAnimationPos(const int& a, const int& b) {animation_a = a; animation_b = b;}
+    void setInputLeft(const int& val) {input_type.left = val;}
+    void ImpMoveType(SDL_Renderer* screen);
+
+    void InitThreat();
 private:
     int map_x, map_y;
     float x_pos, y_pos;
@@ -37,7 +48,9 @@ private:
     SDL_Rect frame_clip[THREAT_FRAME_NUMBER];
     int width_frame, height_frame;
     int frame;
-
+    int type_move;
+    int animation_a, animation_b;
+    Input input_type;
 };
 
 
