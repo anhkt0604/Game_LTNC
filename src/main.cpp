@@ -16,6 +16,7 @@ timer fps_timer;
 void close();
 void process();
 vector <threat*> MakeThreatsList();
+vector <coin*> MakeCoinsList(GameMap &game_map);
 
 int main(int argc, char* argv[]) {
     if (!initSDL()) {
@@ -118,7 +119,8 @@ void process() {
     player.LoadImg(PLAYER_RIGHT, gRenderer);
     player.set_clips();
 
-    vector<threat*> list_threats = MakeThreatsList();
+//    vector<threat*> list_threats = MakeThreatsList();
+    vector<coin*> list_coins = MakeCoinsList(game_map);
 
     bool quit = false;
     while(!quit) {
@@ -135,7 +137,6 @@ void process() {
         SDL_RenderClear(gRenderer);
 
         gBackground.Render(gRenderer, NULL);
-//        game_map.DrawMap(gRenderer);
 
         Map map_data = game_map.getMap();
 
@@ -146,18 +147,33 @@ void process() {
         game_map.setMap(map_data);
         game_map.DrawMap(gRenderer);
 
-        // Render threats
-        for (int i = 0; i < list_threats.size(); i++) {
-            threat* p_threat = list_threats.at(i);
-            if (p_threat != NULL) {
-                p_threat->SetMap(map_data.start_x, map_data.start_y);
-                p_threat->ImpMoveType(gRenderer);
-                p_threat->DoThreat(map_data);
-                p_threat->Render(gRenderer);
+//        // Render threats
+//        for (int i = 0; i < list_threats.size(); i++) {
+//            threat* p_threat = list_threats.at(i);
+//            if (p_threat != NULL) {
+//                p_threat->SetMap(map_data.start_x, map_data.start_y);
+////                p_threat->ImpMoveType(gRenderer);
+//                p_threat->DoThreat(map_data);
+//                p_threat->Render(gRenderer);
+//
+//                // Check collision
+//                if (utils::CheckCollision(player.GetRectFrame(), p_threat->GetRect())) {
+//                    cout << "Collision!" << endl;
+//                }
+//            }
+//        }
 
-                // Check collision
-                if (utils::CheckCollision(player.GetRectFrame(), p_threat->GetRect())) {
-                    cout << "Collision!" << endl;
+
+        // Render coin
+        for (int i = 0; i < list_coins.size(); i++) {
+            coin* p_coin = list_coins[i];
+            if (p_coin != NULL) {
+                p_coin->SetMap(map_data.start_x, map_data.start_y);
+                p_coin->Render(gRenderer);
+
+                if (utils::CheckCollision(player.GetRectFrame(), p_coin->GetRect())) {
+                    p_coin->Free();
+                    list_coins.erase(list_coins.begin() + i);
                 }
             }
         }
@@ -175,27 +191,27 @@ void process() {
 vector <threat*> MakeThreatsList() {
     vector <threat*> list_threats;
 
-    threat* dynamic_threat = new threat[20];
-    for (int i = 0; i < 20; i++) {
-        threat* p_threat = (dynamic_threat + i);
-        if (p_threat == NULL) {
-            cout << "Memory allocation failed!" << endl;
-            return list_threats;
-        } else {
-            p_threat->LoadImg(THREAT, gRenderer);  // Load image threat left?
-            p_threat->set_clips();
-            p_threat->set_type_move(threat::MoveType::MOVE_THREAT);
-
-            p_threat->setX_pos(500 + i * 500);
-            p_threat->setY_pos(200);
-
-            int pos1 = p_threat->getX_pos() - 60;
-            int pos2 = p_threat->getX_pos() + 60;
-            p_threat->setAnimationPos(pos1, pos2);
-
-            list_threats.push_back(p_threat);
-        }
-    }
+//    threat* dynamic_threat = new threat[20];
+//    for (int i = 0; i < 20; i++) {
+//        threat* p_threat = (dynamic_threat + i);
+//        if (p_threat == NULL) {
+//            cout << "Memory allocation failed!" << endl;
+//            return list_threats;
+//        } else {
+//            p_threat->LoadImg(THREAT, gRenderer);  // Load image threat left?
+//            p_threat->set_clips();
+//            p_threat->set_type_move(threat::MoveType::MOVE_THREAT);
+//
+//            p_threat->setX_pos(500 + i * 500);
+//            p_threat->setY_pos(200);
+//
+//            int pos1 = p_threat->getX_pos() - 60;
+//            int pos2 = p_threat->getX_pos() + 60;
+//            p_threat->setAnimationPos(pos1, pos2);
+//
+//            list_threats.push_back(p_threat);
+//        }
+//    }
 
     threat* threat_obj = new threat[20];
     for (int i = 0; i < 20; i++) {
@@ -216,4 +232,22 @@ vector <threat*> MakeThreatsList() {
     }
 
     return list_threats;
+}
+
+vector<coin*> MakeCoinsList(GameMap &game_map) {
+    vector <coin*> list_coins;
+    vector <vector<int>> coin_list = game_map.GetCoinList();
+
+    for (int i = 0; i < coin_list.size(); i++) {
+        coin* p_coin = new coin();
+        p_coin->LoadImg(PROJECT_SOURCE_DIR + "res/coin.png", gRenderer);
+        p_coin->set_clips();
+        p_coin->setX_pos(coin_list[i][0]);
+        p_coin->setY_pos(coin_list[i][1]);
+        p_coin->setInputLeft(0);
+
+        list_coins.push_back(p_coin);
+    }
+
+    return list_coins;
 }

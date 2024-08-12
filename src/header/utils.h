@@ -37,7 +37,7 @@ const int COLOR_KEY_B = 255;
 const int SCREEN_BPP = 32;
 
 const int RENDER_DRAW_COLOR = 0xFF;
-const int FRAME_PER_SECOND = 25;
+const int FRAME_PER_SECOND = 20;
 
 #define BLANK_TILE 0
 #define TILE_SIZE 64
@@ -48,8 +48,8 @@ const int FRAME_PER_SECOND = 25;
 
 #define GRAVITY_SPEED 1
 #define MAX_FALL_SPEED 10
-#define PLAYER_SPEED 15
-#define JUMP_SPEED 20
+#define PLAYER_SPEED 10
+#define JUMP_SPEED 15
 
 #define START_GAME_Y_POS 200
 

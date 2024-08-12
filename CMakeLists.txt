@@ -35,6 +35,8 @@ add_executable(Game_LTNC src/main.cpp
         src/threat.cpp
         src/header/threat.h
         src/item.cpp
-        src/header/item.h)
+        src/header/item.h
+        src/coin.cpp
+        src/header/coin.h)
 
 target_link_libraries(Game_LTNC SDL2main SDL2 SDL2_image)

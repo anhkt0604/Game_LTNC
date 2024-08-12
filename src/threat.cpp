@@ -141,29 +141,29 @@ void threat::CheckToMap(Map &map_data) {
 
 }
 
-void threat::ImpMoveType(SDL_Renderer *screen) {
-    if (type_move == STATIC_THREAT) {
-        // ?
-    } else {
-        if (on_ground == true) {
-
-            if (x_pos > animation_b) {
-                input_type.left = 1;
-                input_type.right = 0;
-                LoadImg(THREAT, screen);  // change to threat left image
-            } else if (x_pos < animation_a) {
-                input_type.left = 0;
-                input_type.right = 1;
-                LoadImg(THREAT, screen); // change to threat right image
-            }
-
-        } else {
-            if (input_type.left == 1) {
-                LoadImg(THREAT, screen); // change to threat left image
-            }
-        }
-    }
-}
+//void threat::ImpMoveType(SDL_Renderer *screen) {
+//    if (type_move == STATIC_THREAT) {
+//        // ?
+//    } else {
+//        if (on_ground == true) {
+//
+//            if (x_pos > animation_b) {
+//                input_type.left = 1;
+//                input_type.right = 0;
+//                LoadImg(THREAT, screen);  // change to threat left image
+//            } else if (x_pos < animation_a) {
+//                input_type.left = 0;
+//                input_type.right = 1;
+//                LoadImg(THREAT, screen); // change to threat right image
+//            }
+//
+//        } else {
+//            if (input_type.left == 1) {
+//                LoadImg(THREAT, screen); // change to threat left image
+//            }
+//        }
+//    }
+//}
 
 void threat::InitThreat() {
     x_val = 0;
