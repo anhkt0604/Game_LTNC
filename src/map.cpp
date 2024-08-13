@@ -100,19 +100,27 @@ void GameMap::GetObject(int &id, const int i, const int j) {
         tmp.push_back(j * TILE_SIZE);
         tmp.push_back(i * TILE_SIZE);
         coin_list.push_back(tmp);
+    } else if (id == TRAP_TILE) {
+        id = 0;
+        threatTile tmp;
+        tmp.x = j * TILE_SIZE;
+        tmp.y = i * TILE_SIZE;
+        tmp.type = TRAP;
+        tmp.isMoving = false;
+        threat_list.push_back(tmp);
     }
 }
 
-//vector<coin*> GameMap::MakeCoinsList() {
-//    vector <coin*> list_coins;
-//    coin* coin_obj = new coin[20];
+//vector<item*> GameMap::MakeCoinsList() {
+//    vector <item*> list_coins;
+//    item* coin_obj = new item[20];
 //    for (int i = 0; i < 20; i++) {
-//        coin* p_coin = (coin_obj + i);
+//        item* p_coin = (coin_obj + i);
 //        if (p_coin == NULL) {
 //            cout << "Memory allocation failed!" << endl;
 //            return list_coins;
 //        } else {
-//            p_coin->LoadImg(PROJECT_SOURCE_DIR + "res/map/4.png", gRenderer);
+//            p_coin->LoadImg(PROJECT_SOURCE_DIR + "res/map/...", gRenderer);
 //            p_coin->set_clips();
 //            p_coin->setX_pos(700 + i * 1200);
 //            p_coin->setY_pos(250);

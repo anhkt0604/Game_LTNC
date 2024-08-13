@@ -15,7 +15,8 @@ public:
     SDL_Rect GetRect() const { return rect; }
     SDL_Texture* GetTexture() const { return object; }
 
-    virtual bool LoadImg(const string& path, SDL_Renderer* screen);
+    virtual bool LoadImg(const string& path, SDL_Renderer* screen,
+                         const int& r = COLOR_KEY_R, const int& g = COLOR_KEY_G, const int& b = COLOR_KEY_B);
     void Render(SDL_Renderer* screen, const SDL_Rect* clip = NULL);
     void Free();
 

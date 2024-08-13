@@ -12,15 +12,14 @@ gameObject::~gameObject() {
     Free();
 }
 
-bool gameObject::LoadImg(const string &path, SDL_Renderer *screen) {
+bool gameObject::LoadImg(const string &path, SDL_Renderer *screen, const int &r, const int &g, const int &b) {
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
     if (loadedSurface == NULL) {
         cout << "Unable to load image " << path.c_str() << "! SDL_image Error: " << IMG_GetError() << endl;
         return false;
     }
 
-    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format,
-                                                        COLOR_KEY_R, COLOR_KEY_G, COLOR_KEY_B));
+    SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, r, g, b));
     object = SDL_CreateTextureFromSurface(screen, loadedSurface);
     if (object == NULL) {
         cout << "Unable to create texture from " << path.c_str() << "! SDL Error: " << SDL_GetError() << endl;

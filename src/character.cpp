@@ -4,7 +4,7 @@ character::character() {
     frame = 0;
     x_val = 0;
     y_val = 0;
-    x_pos = 0;
+    x_pos = START_GAME_X_POS;
     y_pos = START_GAME_Y_POS;
     width_frame = 0;
     height_frame = 0;
@@ -16,6 +16,8 @@ character::character() {
     map_x = 0;
     map_y = 0;
     come_back_time = 0;
+
+    score = 0;
 }
 
 character::~character() {
@@ -27,11 +29,13 @@ void character::Render(SDL_Renderer *screen) {
 
     UpdatePlayerImage(screen);
 
-    if (input_type.left == 1 || input_type.right == 1) {
-        frame++;
-    } else {
-        frame = 0;
-    }
+//    if (input_type.left == 1 || input_type.right == 1) {
+//        frame++;
+//    } else {
+//        frame = 0;
+//    }
+
+    frame++;
 
     if (frame >= PLAYER_FRAME_NUMBER) {
         frame = 0;
@@ -61,6 +65,13 @@ bool character::LoadImg(const string &path, SDL_Renderer *screen) {
 }
 
 void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
+//    if (events.type == SDL_USEREVENT) {
+//        status = DEAD;
+//        input_type.left = 0;
+//        input_type.right = 0;
+//        input_type.jump = 0;
+//        UpdatePlayerImage(screen);
+//    }
     if (events.type == SDL_KEYDOWN) {
         switch (events.key.keysym.sym) {
             case SDLK_RIGHT:
@@ -79,6 +90,9 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
                 input_type.jump = 1;
                 break;
             default:
+                status = IDLE;
+                input_type.left = 0;
+                input_type.right = 0;
                 break;
         }
     } else if (events.type == SDL_KEYUP) {
@@ -93,6 +107,9 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
                 input_type.jump = 0;
                 break;
             default:
+                status = IDLE;
+                input_type.left = 0;
+                input_type.right = 0;
                 break;
         }
     }
@@ -159,69 +176,72 @@ void character::DoPlayer(Map &map_data) {
     }
 }
 
+
 void character::CheckToMap(Map &map_data) {
-    int x1 = 0;
-    int x2 = 0;
-    int y1 = 0;
-    int y2 = 0;
+    // Define tile positions and dimensions
+    int x1, x2, y1, y2;
+    int tile_size = TILE_SIZE;
+    int map_width = MAX_MAP_X * tile_size;
+    int map_height = MAX_MAP_Y * tile_size;
 
-    // Check horizontal
-    int height_min = min(height_frame, TILE_SIZE);
-    x1 = (x_pos + x_val) / TILE_SIZE;
-    x2 = (x_pos + x_val + width_frame - 1) / TILE_SIZE;
-
-    y1 = y_pos / TILE_SIZE;
-    y2 = (y_pos + height_min - 1) / TILE_SIZE;
+    // Check horizontal collisions
+    int height_min = std::min(height_frame, tile_size);
+    x1 = (x_pos + x_val) / tile_size;
+    x2 = (x_pos + x_val + width_frame - 1) / tile_size;
+    y1 = y_pos / tile_size;
+    y2 = (y_pos + height_min - 1) / tile_size;
 
     if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y) {
-        if (x_val > 0) {
+        if (x_val > 0) { // Moving right
             if (map_data.tile[y1][x2] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE) {
-                x_pos = x2 * TILE_SIZE;
-                x_pos -= width_frame + 1;
+                x_pos = x2 * tile_size - width_frame - 1;
                 x_val = 0;
             }
-        } else if (x_val < 0) {
+        } else if (x_val < 0) { // Moving left
             if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y2][x1] != BLANK_TILE) {
-                x_pos = (x1 + 1) * TILE_SIZE;
+                x_pos = (x1 + 1) * tile_size;
                 x_val = 0;
             }
         }
     }
 
-    // Check vertical
-    int width_min = min(width_frame, TILE_SIZE);
-    x1 = x_pos / TILE_SIZE;
-    x2 = (x_pos + width_min) / TILE_SIZE;
-
-    y1 = (y_pos + y_val) / TILE_SIZE;
-    y2 = (y_pos + y_val + height_frame - 1) / TILE_SIZE;
+    // Check vertical collisions
+    int width_min = std::min(width_frame, tile_size);
+    x1 = x_pos / tile_size;
+    x2 = (x_pos + width_min) / tile_size;
+    y1 = (y_pos + y_val) / tile_size;
+    y2 = (y_pos + y_val + height_frame - 1) / tile_size;
 
     if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y) {
-        if (y_val > 0) {
+        if (y_val > 0) { // Falling down
             if (map_data.tile[y2][x1] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE) {
-                y_pos = y2 * TILE_SIZE;
-                y_pos -= (height_frame + 1);
+                y_pos = y2 * tile_size - height_frame - 1;
                 y_val = 0;
                 on_ground = true;
-                if (status == IDLE) {
-                    status = RIGHT;
-                }
             }
-        } else if (y_val < 0) {
+        } else if (y_val < 0) { // Jumping up
             if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y1][x2] != BLANK_TILE) {
-                y_pos = (y1 + 1) * TILE_SIZE;
+                y_pos = (y1 + 1) * tile_size;
                 y_val = 0;
             }
         }
     }
 
+    // Update position
     x_pos += x_val;
     y_pos += y_val;
 
+    // Ensure the character stays within the map boundaries
     if (x_pos < 0) {
         x_pos = 0;
-    } else if (x_pos + width_frame > MAX_MAP_X * TILE_SIZE) {
-        x_pos = MAX_MAP_X * TILE_SIZE - width_frame;
+    } else if (x_pos + width_frame > map_width) {
+        x_pos = map_width - width_frame;
+    }
+
+    if (y_pos < 0) {
+        y_pos = 0;
+    } else if (y_pos + height_frame > map_height) {
+        y_pos = map_height - height_frame;
     }
 }
 
@@ -253,12 +273,18 @@ void character::UpdatePlayerImage(SDL_Renderer *screen) {
             status = LEFT;
         } else if (input_type.right == 1) {
             status = RIGHT;
+        } else {
+            status = IDLE;
         }
 
         if (status == RIGHT) {
             LoadImg(PLAYER_RIGHT, screen);
         } else if (status == LEFT) {
             LoadImg(PLAYER_LEFT, screen);
+        } else if (status == DEAD) {
+            LoadImg(PLAYER_DEAD, screen);
+        } else {
+            LoadImg(PLAYER_IDLE, screen);
         }
     } else {  // Jump
 //        if (status == RIGHT) {
@@ -277,6 +303,29 @@ SDL_Rect character::GetRectFrame() {
     result.h = height_frame;
     return result;
 }
+
+void character::UpdateItems(itemType type) {
+    switch (type) {
+        case COIN:
+            score += 1;
+            cout << "Score: " << score << endl;
+            break;
+        case HEART:
+
+            break;
+        default:
+
+            break;
+    }
+}
+
+void character::SetStatus(const int &state) {
+    status = state;
+    if (status == DEAD) {
+        come_back_time = 30;
+    }
+}
+
 
 
 
