@@ -21,8 +21,7 @@ link_directories(${SDL2_LIB_DIR})
 include_directories(${SDL_Image_INCLUDE_DIR})
 link_directories(${SDL_Image_LIB_DIR})
 
-add_executable(Game_LTNC
-        src/main.cpp
+add_executable(Game_LTNC src/main.cpp
         src/gameObject.cpp
         src/header/gameObject.h
         src/map.cpp
@@ -37,9 +36,6 @@ add_executable(Game_LTNC
         src/header/threat.h
         src/item.cpp
         src/header/item.h
-        src/header/item.h
-        src/Explosion.cpp
-        src/header/Explosion.h
-)
+        src/Explosion.cpp)
 
 target_link_libraries(Game_LTNC SDL2main SDL2 SDL2_image)

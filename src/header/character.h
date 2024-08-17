@@ -26,17 +26,19 @@ public:
     void UpdateItems(itemType type);
     void SetComeBackTime(const int& cb_time) { come_back_time = cb_time; }
     void SetStatus(const int& state);
-    bool CheckCollision(const gameObject& object) override { return gameObject::CheckCollision(object); }
 
-    // get tile position of the player position
-    int GetXTile() { return x_pos / TILE_SIZE; }
-    int GetYTile() { return y_pos / TILE_SIZE; }
+//    bool CheckCollision(const Map& map_data);
+
+//    int GetTilePosX() const { return tile_pos.x; }
+//    int GetTilePosY() const { return tile_pos.y; }
+//    TilePos GetTilePos() const { return tile_pos; }
 
     SDL_Rect GetRectFrame();
+    TilePos GetTilePos();
 
 private:
     float x_val, y_val;
-//    float x_pos, y_pos;
+    float x_pos, y_pos;
     int width_frame, height_frame;
     int map_x, map_y;
     SDL_Rect frame_clip[PLAYER_FRAME_NUMBER];

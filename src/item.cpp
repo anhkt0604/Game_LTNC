@@ -1,4 +1,6 @@
-
+//
+// Created by ADMIN on 8/12/2024.
+//
 
 #include "header/item.h"
 
@@ -16,6 +18,8 @@ item::item() {
     animation_a = 0;
     animation_b = 0;
     input_type.left = 1;
+
+    object_name = "item";
 }
 
 item::~item() {
@@ -60,7 +64,7 @@ void item::DoCoin(Map &map_data) {
     if (come_back_time == 0) {
         x_val = 0;
         y_val += GRAVITY_SPEED;
-        if (y_val >= MAX_FALL_SPEED) y_val = MAX_FALL_SPEED;   // item dung im 1 cho
+        if (y_val >= MAX_FALL_SPEED) y_val = MAX_FALL_SPEED;   // coin dung im 1 cho
 
         if (input_type.left == 1) {
             x_val -= PLAYER_SPEED;     // Note: add new constant coin_SPEED?
@@ -72,7 +76,7 @@ void item::DoCoin(Map &map_data) {
     } else if (come_back_time > 0) {
         come_back_time--;
         if (come_back_time == 0) {
-            InitCoin();
+            InitItem();
         }
     }
 }
@@ -144,7 +148,7 @@ void item::CheckToMap(Map &map_data) {
 
 
 
-void item::InitCoin() {
+void item::InitItem() {
     x_val = 0;
     y_val = 0;
 

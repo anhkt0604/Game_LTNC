@@ -15,6 +15,8 @@ threat::threat() {
     animation_b = 0;
     input_type.left = 1;
     type_move = STATIC_THREAT;
+
+    object_name = "threat";
 }
 
 threat::~threat() {

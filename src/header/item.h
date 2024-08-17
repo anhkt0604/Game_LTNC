@@ -17,10 +17,10 @@ public:
     void setX_val(const float& xVal) {x_val = xVal;}
     void setY_val(const float& yVal) {y_val = yVal;}
 
-//    void setX_pos(const float& xPos) {x_pos = xPos;}
-//    void setY_pos(const float& yPos) {y_pos = yPos;}
-//    float getX_pos() const {return x_pos;}
-//    float getY_pos() const {return y_pos;}
+    void setX_pos(const float& xPos) {x_pos = xPos;}
+    void setY_pos(const float& yPos) {y_pos = yPos;}
+    float getX_pos() const {return x_pos;}
+    float getY_pos() const {return y_pos;}
 
     void SetMap(const int& x, const int& y) {map_x = x; map_y = y;}
     void set_clips();
@@ -37,10 +37,11 @@ public:
     void setAnimationPos(const int& a, const int& b) {animation_a = a; animation_b = b;}
     void setInputLeft(const int& val) {input_type.left = val;}
 
-    void InitCoin();
+    void InitItem();
+
 private:
     int map_x, map_y;
-//    float x_pos, y_pos;
+    float x_pos, y_pos;
     float x_val, y_val;
     bool on_ground;
     int come_back_time;
