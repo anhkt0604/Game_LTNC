@@ -96,31 +96,104 @@ void GameMap::GetObject(int &id, const int i, const int j) {
         return;
     } else if (id == COIN_TILE) {
         id = 0;
-        vector<int> tmp;
-        tmp.push_back(j * TILE_SIZE);
-        tmp.push_back(i * TILE_SIZE);
+        gMap.object[i][j] = COIN_TILE;
+        itemTile tmp;
+        tmp.x = j * TILE_SIZE;
+        tmp.y = i * TILE_SIZE;
         coin_list.push_back(tmp);
+    } else if (id == TRAP_TILE) {
+        id = 0;
+        gMap.object[i][j] = TRAP_TILE;
+        threatTile tmp;
+        tmp.x = j * TILE_SIZE;
+        tmp.y = i * TILE_SIZE;
+        tmp.type = TRAP;
+        tmp.isMoving = false;
+        threat_list.push_back(tmp);
     }
 }
-
-//vector<coin*> GameMap::MakeCoinsList() {
-//    vector <coin*> list_coins;
-//    coin* coin_obj = new coin[20];
-//    for (int i = 0; i < 20; i++) {
-//        coin* p_coin = (coin_obj + i);
-//        if (p_coin == NULL) {
-//            cout << "Memory allocation failed!" << endl;
-//            return list_coins;
-//        } else {
-//            p_coin->LoadImg(PROJECT_SOURCE_DIR + "res/map/4.png", gRenderer);
-//            p_coin->set_clips();
-//            p_coin->setX_pos(700 + i * 1200);
-//            p_coin->setY_pos(250);
-//            p_coin->setInputLeft(0);
 //
-//            list_coins.push_back(p_coin);
-//        }
+//map<TilePos, item *> GameMap::GetCoinMap(SDL_Renderer* renderer) const {
+//    map<TilePos, item*> list_coins;
+//
+//    for (int i = 0; i < coin_list.size(); i++) {
+//        item* p_coin = new item();
+//        p_coin->LoadImg(COIN_DIR, renderer);
+//        p_coin->SetTilePos(coin_list[i]);
+//        p_coin->set_clips();
+//        p_coin->setX_pos(coin_list[i].x);
+//        p_coin->setY_pos(coin_list[i].y);
+//        p_coin->setInputLeft(0);
+//
+//        list_coins[{coin_list[i].x, coin_list[i].y}] = p_coin;
 //    }
 //
 //    return list_coins;
 //}
+//
+//map<TilePos, threat *> GameMap::GetThreatMap(SDL_Renderer* renderer) const {
+//    map<TilePos, threat*> list_threats;
+//
+//    for (int i = 0; i < threat_list.size(); i++) {
+//        threat* p_threat = new threat();
+//        p_threat->SetTilePos(threat_list[i]);
+//        p_threat->LoadImg(TRAP_DIR, renderer);
+//        p_threat->set_clips();
+//        p_threat->setX_pos(threat_list[i].x);
+//        p_threat->setY_pos(threat_list[i].y);
+//        if (threat_list[i].isMoving) {
+//            p_threat->set_type_move(threat::MoveType::MOVE_THREAT);
+//        } else {
+//            p_threat->set_type_move(threat::MoveType::STATIC_THREAT);
+//            p_threat->setInputLeft(0);
+//        }
+//
+//        list_threats[{threat_list[i].x, threat_list[i].y}] = p_threat;
+//    }
+//
+//    return list_threats;
+//}
+
+vector<item *> GameMap::GetCoinList(SDL_Renderer* renderer) {
+    vector <item*> list_coins;
+
+    for (int i = 0; i < coin_list.size(); i++) {
+        item* p_coin = new item();
+        p_coin->LoadImg(COIN_DIR, renderer);
+        p_coin->SetTilePos(coin_list[i]);
+        p_coin->set_clips();
+        p_coin->setX_pos(coin_list[i].x);
+        p_coin->setY_pos(coin_list[i].y);
+        p_coin->setInputLeft(0);
+
+        list_coins.push_back(p_coin);
+//        coin_map[{coin_list[i].x, coin_list[i].y}] = i;
+    }
+
+    return list_coins;
+}
+
+vector<threat *> GameMap::GetThreatList(SDL_Renderer* renderer) {
+    vector <threat*> list_threats;
+    for (int i = 0; i < threat_list.size(); i++) {
+        threat* p_threat = new threat();
+        p_threat->SetTilePos(threat_list[i]);
+        p_threat->LoadImg(TRAP_DIR, renderer);
+        p_threat->set_clips();
+        p_threat->setX_pos(threat_list[i].x);
+        p_threat->setY_pos(threat_list[i].y);
+        if (threat_list[i].isMoving) {
+            p_threat->set_type_move(threat::MoveType::MOVE_THREAT);
+        } else {
+            p_threat->set_type_move(threat::MoveType::STATIC_THREAT);
+            p_threat->setInputLeft(0);
+        }
+
+        list_threats.push_back(p_threat);
+//        threat_map[{threat_list[i].x, threat_list[i].y}] = i;
+    }
+
+    return list_threats;
+}
+
+

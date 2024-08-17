@@ -16,6 +16,8 @@ character::character() {
     map_x = 0;
     map_y = 0;
     come_back_time = 0;
+
+    score = 0;
 }
 
 character::~character() {
@@ -79,6 +81,9 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
                 input_type.jump = 1;
                 break;
             default:
+                status = IDLE;
+                input_type.left = 0;
+                input_type.right = 0;
                 break;
         }
     } else if (events.type == SDL_KEYUP) {
@@ -93,6 +98,9 @@ void character::HandleInputAction(SDL_Event events, SDL_Renderer *screen) {
                 input_type.jump = 0;
                 break;
             default:
+                status = IDLE;
+                input_type.left = 0;
+                input_type.right = 0;
                 break;
         }
     }
@@ -176,9 +184,7 @@ void character::CheckToMap(Map &map_data) {
     if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y) {
         if (x_val > 0) {
             if (map_data.tile[y1][x2] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE) {
-                x_pos = x2 * TILE_SIZE;
-                x_pos -= width_frame + 1;
-                x_val = 0;
+
             }
         } else if (x_val < 0) {
             if (map_data.tile[y1][x1] != BLANK_TILE || map_data.tile[y2][x1] != BLANK_TILE) {
@@ -253,12 +259,16 @@ void character::UpdatePlayerImage(SDL_Renderer *screen) {
             status = LEFT;
         } else if (input_type.right == 1) {
             status = RIGHT;
+        } else {
+            status = IDLE;
         }
 
         if (status == RIGHT) {
             LoadImg(PLAYER_RIGHT, screen);
         } else if (status == LEFT) {
             LoadImg(PLAYER_LEFT, screen);
+        } else {
+            LoadImg(PLAYER_IDLE, screen);
         }
     } else {  // Jump
 //        if (status == RIGHT) {
@@ -277,6 +287,62 @@ SDL_Rect character::GetRectFrame() {
     result.h = height_frame;
     return result;
 }
+
+void character::UpdateItems(itemType type) {
+    switch (type) {
+        case COIN:
+            score += 1;
+            cout << "Score: " << score << endl;
+            break;
+        case HEART:
+
+            break;
+        default:
+
+            break;
+    }
+}
+
+void character::SetStatus(const int &state) {
+    status = state;
+    if (status == DEAD) {
+        come_back_time = 30;
+    }
+}
+
+
+//bool character::CheckCollision(const Map &map_data) {
+//    // x, y là vị trí của tile mà player đang đứng
+//    SetTilePos();
+//
+//    int x = tile_pos.x;
+//    int y = tile_pos.y;
+//
+//    if (map_data.object[y][x] == TRAP) {
+//        SetStatus(DEAD);
+//        return true;
+//    } else if (map_data.object[y][x] == COIN) {
+//        UpdateItems(COIN);
+//        return true;
+//    }
+//
+//    return false;
+//}
+//
+//void character::SetTilePos() {
+//    int height_min = min(height_frame, TILE_SIZE);
+//    tile_pos.x = (x_pos + x_val + width_frame - 1) / TILE_SIZE - 1;
+//    tile_pos.y = (y_pos + height_min - 1) / TILE_SIZE;
+//}
+
+TilePos character::GetTilePos() {
+    TilePos result;
+    int height_min = min(height_frame, TILE_SIZE);
+    result.x = (x_pos + x_val + width_frame - 1) / TILE_SIZE - 1;
+    result.y = (y_pos + height_min - 1) / TILE_SIZE;
+    return result;
+}
+
 
 
 

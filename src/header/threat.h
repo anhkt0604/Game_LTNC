@@ -36,9 +36,10 @@ public:
     void set_type_move(const int& type) {type_move = type;}
     void setAnimationPos(const int& a, const int& b) {animation_a = a; animation_b = b;}
     void setInputLeft(const int& val) {input_type.left = val;}
-    void ImpMoveType(SDL_Renderer* screen);
+//    void ImpMoveType(SDL_Renderer* screen);
 
     void InitThreat();
+
 private:
     int map_x, map_y;
     float x_pos, y_pos;

@@ -15,13 +15,21 @@ public:
     SDL_Rect GetRect() const { return rect; }
     SDL_Texture* GetTexture() const { return object; }
 
-    virtual bool LoadImg(const string& path, SDL_Renderer* screen);
+    virtual bool LoadImg(const string& path, SDL_Renderer* screen,
+                         const int& r = COLOR_KEY_R, const int& g = COLOR_KEY_G, const int& b = COLOR_KEY_B);
     void Render(SDL_Renderer* screen, const SDL_Rect* clip = NULL);
     void Free();
+
+    virtual bool CheckCollision(const gameObject& object);
+    string GetObjectName() const { return object_name; }
+    TilePos GetTilePos() const { return tile_pos; }
+    void SetTilePos(const TilePos& pos) { tile_pos = pos; }
 
 protected:
     SDL_Texture* object;
     SDL_Rect rect;
+    string object_name;
+    TilePos tile_pos;
 };
 
 #endif //GAME_LTNC_GAMEOBJECT_H
