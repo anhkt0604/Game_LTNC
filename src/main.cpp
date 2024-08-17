@@ -161,14 +161,13 @@ void process() {
             if (p_threat != NULL) {
                 p_threat->SetMap(map_data.start_x, map_data.start_y);
 //                p_threat->ImpMoveType(gRenderer);
-//                p_threat->DoThreat(map_data);
+                p_threat->DoThreat(map_data);
                 p_threat->Render(gRenderer);
 
                 // Check collision
-                if (utils::CheckCollision(player.GetRectFrame(), p_threat->GetRect())) {
+//                if (utils::CheckCollision(player.GetRectFrame(), p_threat->GetRect())) {
+                if (player.CheckCollision(*p_threat)) {
                     cout << "Collision detected!" << endl;
-                    int explosion_frame_width = explosion.get_frame_width();
-                    int explosion_frame_height = explosion.get_frame_height();
                     for (int i = 0; i < EXPLOSION_FRAME_NUMBER; i++) {
                         explosion.set_frame(i);
                         explosion.SetRect(player.GetRectFrame().x, player.GetRectFrame().y);
@@ -279,14 +278,14 @@ vector <threat*> MakeThreatsList(GameMap &game_map) {
 
 vector<item*> MakeCoinsList(GameMap &game_map) {
     vector <item*> list_coins;
-    vector <vector<int>> coin_list = game_map.GetCoinList();
+    vector <itemTile> coin_list = game_map.GetCoinList();
 
     for (int i = 0; i < coin_list.size(); i++) {
         item* p_coin = new item();
         p_coin->LoadImg(COIN_DIR, gRenderer);
         p_coin->set_clips();
-        p_coin->setX_pos(coin_list[i][0]);
-        p_coin->setY_pos(coin_list[i][1]);
+        p_coin->setX_pos(coin_list[i].x);
+        p_coin->setY_pos(coin_list[i].y);
         p_coin->setInputLeft(0);
 
         list_coins.push_back(p_coin);

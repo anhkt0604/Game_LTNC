@@ -176,7 +176,6 @@ void character::DoPlayer(Map &map_data) {
     }
 }
 
-
 void character::CheckToMap(Map &map_data) {
     // Define tile positions and dimensions
     int x1, x2, y1, y2;
@@ -281,8 +280,6 @@ void character::UpdatePlayerImage(SDL_Renderer *screen) {
             LoadImg(PLAYER_RIGHT, screen);
         } else if (status == LEFT) {
             LoadImg(PLAYER_LEFT, screen);
-        } else if (status == DEAD) {
-            LoadImg(PLAYER_DEAD, screen);
         } else {
             LoadImg(PLAYER_IDLE, screen);
         }

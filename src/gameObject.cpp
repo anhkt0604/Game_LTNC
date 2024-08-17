@@ -48,3 +48,10 @@ void gameObject::Free() {
         rect.h = 0;
     }
 }
+
+bool gameObject::CheckCollision(const gameObject &object) {
+    if (this->getX_pos() == object.getX_pos() && this->getY_pos() == object.getY_pos()) {
+        return true;
+    }
+    return false;
+}

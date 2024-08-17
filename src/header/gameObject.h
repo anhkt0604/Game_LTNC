@@ -20,7 +20,16 @@ public:
     void Render(SDL_Renderer* screen, const SDL_Rect* clip = NULL);
     void Free();
 
+    // hàm trả về vị trí trên màn hình
+    void setX_pos(const float& xPos) {x_pos = xPos;}
+    void setY_pos(const float& yPos) {y_pos = yPos;}
+    float getX_pos() const {return x_pos;}
+    float getY_pos() const {return y_pos;}
+
+    virtual bool CheckCollision(const gameObject& object);
+
 protected:
+    float x_pos, y_pos;
     SDL_Texture* object;
     SDL_Rect rect;
 };

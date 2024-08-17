@@ -96,9 +96,9 @@ void GameMap::GetObject(int &id, const int i, const int j) {
         return;
     } else if (id == COIN_TILE) {
         id = 0;
-        vector<int> tmp;
-        tmp.push_back(j * TILE_SIZE);
-        tmp.push_back(i * TILE_SIZE);
+        itemTile tmp;
+        tmp.x = j * TILE_SIZE;
+        tmp.y = i * TILE_SIZE;
         coin_list.push_back(tmp);
     } else if (id == TRAP_TILE) {
         id = 0;

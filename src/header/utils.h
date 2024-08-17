@@ -7,6 +7,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <vector>
+
 using namespace std;
 
 string getPath();
@@ -53,7 +54,7 @@ const int FRAME_PER_SECOND = 15;
 #define GRAVITY_SPEED 1
 #define MAX_FALL_SPEED 10
 #define PLAYER_SPEED 15
-#define JUMP_SPEED 15
+#define JUMP_SPEED 18
 
 #define START_GAME_Y_POS 200
 #define START_GAME_X_POS 100
@@ -82,7 +83,10 @@ typedef struct threatTile {
     bool isMoving;
 };
 
-
+typedef struct itemTile {
+    int x, y;
+    itemType type;
+};
 
 namespace utils {
     bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);

@@ -26,7 +26,7 @@ public:
     void LoadTiles(SDL_Renderer* renderer);
     void DrawMap(SDL_Renderer* renderer);
 //    vector <item*> MakeCoinsList();
-    vector<vector<int>> GetCoinList() const { return coin_list; }
+    vector<itemTile> GetCoinList() const { return coin_list; }
     vector<threatTile> GetThreatList() const { return threat_list; }
 
     Map getMap() { return gMap; }
@@ -41,7 +41,7 @@ private:
     Map gMap;
     tile tiles[MAX_TILES];
 
-    vector<vector<int>> coin_list;
+    vector<itemTile> coin_list;
     vector<threatTile> threat_list;
     void GetObject(int &id, const int i, const int j);
 };
