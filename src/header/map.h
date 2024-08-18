@@ -10,6 +10,8 @@
 #define MAX_TILES 20
 #define COIN_TILE 4
 #define TRAP_TILE 5
+#define KEY_TILE 6
+#define DOOR_TILE 8
 
 
 class tile : public gameObject {
@@ -29,6 +31,9 @@ public:
     vector<item*> GetCoinList(SDL_Renderer* renderer);
     vector<threat*> GetThreatList(SDL_Renderer* renderer);
 
+    item* GetDoor(SDL_Renderer* renderer);
+    item* GetKey(SDL_Renderer* renderer);
+
 
     Map getMap() { return gMap; }
     void setMap(Map &map) { gMap = map; }
@@ -47,6 +52,9 @@ private:
 
     vector<itemTile> coin_list;
     vector<threatTile> threat_list;
+
+    TilePos key;
+    TilePos door;
 
 //    map<TilePos, int> coin_map;
 //    map<TilePos, int> threat_map;

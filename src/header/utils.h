@@ -22,6 +22,9 @@ const string PLAYER_DEAD = PROJECT_SOURCE_DIR + "res/player_dead.png";
 const string TRAP_DIR = PROJECT_SOURCE_DIR + "res/trap.png";
 const string COIN_DIR = PROJECT_SOURCE_DIR + "res/coin.png";
 const string EXPLOSION_DIR = PROJECT_SOURCE_DIR + "res/explosion.png";
+const string HEART_DIR = PROJECT_SOURCE_DIR + "res/map/7.png";
+const string DOOR_DIR = PROJECT_SOURCE_DIR + "res/map/8.png";
+const string KEY_DIR = PROJECT_SOURCE_DIR + "res/map/6.png";
 
 static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gRenderer = NULL;
@@ -54,9 +57,9 @@ const int FRAME_PER_SECOND = 20;
 #define JUMP_SPEED 20
 
 #define START_GAME_Y_POS 200
-//#define START_GAME_X_POS 100
+#define START_GAME_X_POS 100
 
-enum itemType {COIN = 4, HEART};
+enum itemType {COIN = 4, HEART = 7, DOOR = 8, KEY = 6};
 enum threatType {TRAP = 5};
 
 typedef struct Input {
@@ -75,7 +78,7 @@ typedef struct Map {
     char* file_name;
 };
 
-struct TilePos {
+typedef struct TilePos {
     int x, y;
 
     // Toán tử so sánh < để có thể sử dụng Point làm khóa trong std::map
@@ -93,12 +96,12 @@ inline ostream& operator<<(ostream& os, const TilePos& point) {
     return os;
 };
 
-struct threatTile : TilePos {
+typedef struct threatTile : TilePos {
     threatType type;
     bool isMoving;
 };
 
-struct itemTile : TilePos {
+typedef struct itemTile : TilePos {
     itemType type;
 };
 

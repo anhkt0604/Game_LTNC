@@ -8,7 +8,7 @@ threat::threat() {
     width_frame = 0;
     height_frame = 0;
     come_back_time = 0;
-    on_ground = false;
+    on_ground = true;
     frame = 0;
 
     animation_a = 0;

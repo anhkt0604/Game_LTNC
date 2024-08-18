@@ -36,6 +36,16 @@ public:
     SDL_Rect GetRectFrame();
     TilePos GetTilePos();
 
+    int GetHeart() const { return heart; }
+    int GetScore() const { return score; }
+    void useHeart() { heart--; }
+    bool isDead() { return heart < 0; }
+    void AddHeart() { heart++; }
+    void AddScore() { score++; }
+
+    void SetKey(bool k) { key = k; }
+    bool GetKey() { return key; }
+
 private:
     float x_val, y_val;
     float x_pos, y_pos;
@@ -49,6 +59,8 @@ private:
     bool on_ground;
 
     int score;
+    int heart;
+    bool key;
 
     void CheckToMap(Map &map_data);
     void CenterEntityOnMap(Map &map_data);

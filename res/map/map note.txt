@@ -1,0 +1,11 @@
+
+0 - blank tile
+1 - ground
+2 - ground
+3 - ground
+4 - coin
+5 - threat
+6 - key
+7 - heart
+8 - door
+9 - block

@@ -22,22 +22,62 @@ item::item() {
     object_name = "item";
 }
 
+item::item(string type) {
+    x_val = 0;
+    y_val = 0;
+    x_pos = 0;
+    y_pos = 0;
+    width_frame = 0;
+    height_frame = 0;
+    come_back_time = 0;
+    on_ground = false;
+    frame = 0;
+
+    animation_a = 0;
+    animation_b = 0;
+    input_type.left = 1;
+
+    object_name = type;
+    if (type == "coin") {
+        item_type = COIN;
+    } else if (type == "heart") {
+        item_type = HEART;
+    } else if (type == "key") {
+        item_type = KEY;
+    } else if (type == "door") {
+        item_type = DOOR;
+    }
+}
+
 item::~item() {
 //    Free();
 }
 
 bool item::LoadImg(string path, SDL_Renderer* screen) {   // giống character ?
+    int frame_number;
+    if (object_name == "coin") {
+        frame_number = COIN_FRAME_NUMBER;
+    } else {
+        frame_number = 1;
+    }
     bool ret = gameObject::LoadImg(path, screen);
     if (ret) {
-        width_frame = rect.w / COIN_FRAME_NUMBER;
+        width_frame = rect.w / frame_number;
         height_frame = rect.h;
     }
     return ret;
 }
 
-void item::set_clips() {    // giống character ?
+void item::set_clips() {    //
+    int frame_number;
+    if (object_name == "coin") {
+        frame_number = COIN_FRAME_NUMBER;
+    } else {
+        frame_number = 1;
+    }
+
     if (width_frame > 0 && height_frame > 0) {
-        for (int i = 0; i < COIN_FRAME_NUMBER; i++) {
+        for (int i = 0; i < frame_number; i++) {
             frame_clip[i].x = i * width_frame;
             frame_clip[i].y = 0;
             frame_clip[i].w = width_frame;
@@ -47,11 +87,17 @@ void item::set_clips() {    // giống character ?
 }
 
 void item::Render(SDL_Renderer *screen) {  // khac character 1 xiu?
+    int frame_number;
+    if (object_name == "coin") {
+        frame_number = COIN_FRAME_NUMBER;
+    } else {
+        frame_number = 1;
+    }
     if (come_back_time == 0) {
         rect.x = x_pos - map_x;
         rect.y = y_pos - map_y;
         frame++;
-        if (frame >= COIN_FRAME_NUMBER) frame = 0;
+        if (frame >= frame_number) frame = 0;
 
 
         SDL_Rect* currentClip = &frame_clip[frame];

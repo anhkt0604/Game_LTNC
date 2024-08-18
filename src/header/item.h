@@ -11,6 +11,7 @@
 
 class item : public gameObject {
 public:
+    item(string name);
     item();
     ~item();
 
@@ -39,18 +40,21 @@ public:
 
     void InitItem();
 
+    itemType getType() {return item_type;}
+
 private:
     int map_x, map_y;
     float x_pos, y_pos;
     float x_val, y_val;
     bool on_ground;
     int come_back_time;
-    SDL_Rect frame_clip[THREAT_FRAME_NUMBER];
+    SDL_Rect frame_clip[COIN_FRAME_NUMBER];
     int width_frame, height_frame;
     int frame;
     int type_move;
     int animation_a, animation_b;
     Input input_type;
+    itemType item_type;
 };
 
 

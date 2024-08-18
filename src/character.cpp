@@ -4,7 +4,7 @@ character::character() {
     frame = 0;
     x_val = 0;
     y_val = 0;
-    x_pos = 0;
+    x_pos = START_GAME_X_POS;
     y_pos = START_GAME_Y_POS;
     width_frame = 0;
     height_frame = 0;
@@ -18,6 +18,7 @@ character::character() {
     come_back_time = 0;
 
     score = 0;
+    heart = 3;
 }
 
 character::~character() {
@@ -248,6 +249,7 @@ void character::CenterEntityOnMap(Map &map_data) {
 
     if (y_pos > map_data.max_y) {
         come_back_time = 30;
+        useHeart();
     } else {
         come_back_time = 0;
     }
@@ -291,11 +293,12 @@ SDL_Rect character::GetRectFrame() {
 void character::UpdateItems(itemType type) {
     switch (type) {
         case COIN:
-            score += 1;
+            AddScore();
             cout << "Score: " << score << endl;
             break;
         case HEART:
-
+            AddHeart();
+            cout << "Heart: " << heart << endl;
             break;
         default:
 
@@ -338,7 +341,7 @@ void character::SetStatus(const int &state) {
 TilePos character::GetTilePos() {
     TilePos result;
     int height_min = min(height_frame, TILE_SIZE);
-    result.x = (x_pos + x_val + width_frame - 1) / TILE_SIZE - 1;
+    result.x = (x_pos + x_val + width_frame - 1) / TILE_SIZE - 0.7;
     result.y = (y_pos + height_min - 1) / TILE_SIZE;
     return result;
 }

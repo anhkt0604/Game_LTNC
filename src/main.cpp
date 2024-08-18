@@ -123,6 +123,9 @@ void process() {
     vector<threat*> list_threats = game_map.GetThreatList(gRenderer);
     vector<item*> list_coins = game_map.GetCoinList(gRenderer);
 
+    item* door = game_map.GetDoor(gRenderer);
+    item* key = game_map.GetKey(gRenderer);
+
     Explosion explosion;
     if (!explosion.LoadImg(EXPLOSION_DIR, gRenderer)) {
         cout << "Failed to load explosion image!" << endl;
@@ -139,6 +142,11 @@ void process() {
             player.HandleInputAction(gEvent, gRenderer);
         }
 
+        if (player.isDead()) {
+            cout << "Game Over!" << endl;
+            quit = true;
+        }
+
         SDL_SetRenderDrawColor(gRenderer, RENDER_DRAW_COLOR, RENDER_DRAW_COLOR,
                                RENDER_DRAW_COLOR, RENDER_DRAW_COLOR);
         SDL_RenderClear(gRenderer);
@@ -146,6 +154,26 @@ void process() {
         gBackground.Render(gRenderer, NULL);
 
         Map map_data = game_map.getMap();
+
+        // Render door
+        door->SetMap(map_data.start_x, map_data.start_y);
+        door->Render(gRenderer);
+        if (utils::CheckCollision(player.GetTilePos(), door->GetTilePos())) {
+            if (player.GetKey()) {
+                cout << "You win!" << endl;
+                quit = true;
+            } else {
+                cout << "You need a key to open the door!" << endl;
+            }
+        }
+
+        // Render key
+        key->SetMap(map_data.start_x, map_data.start_y);
+        key->Render(gRenderer);
+        if (utils::CheckCollision(player.GetTilePos(), key->GetTilePos())) {
+            key->Free();
+            player.SetKey(true);
+        }
 
         player.UpdateMap(map_data.start_x, map_data.start_y);
         player.DoPlayer(map_data);
@@ -159,7 +187,6 @@ void process() {
             threat* p_threat = list_threats[i];
             if (p_threat != NULL) {
                 p_threat->SetMap(map_data.start_x, map_data.start_y);
-                p_threat->DoThreat(map_data);
                 p_threat->Render(gRenderer);
 
                 // Check collision
@@ -174,6 +201,7 @@ void process() {
                     p_threat->Free();
                     list_threats.erase(list_threats.begin() + i);
                     player.SetStatus(character::MoveType::DEAD);
+                    player.useHeart();
                 }
             }
         }
@@ -186,12 +214,15 @@ void process() {
                 p_coin->Render(gRenderer);
 
                 if (utils::CheckCollision(player.GetTilePos(), p_coin->GetTilePos())) {
+                    cout << "Collision detected!" << endl;
                     p_coin->Free();
                     list_coins.erase(list_coins.begin() + i);
                     player.UpdateItems(COIN);
                 }
             }
         }
+
+
 
 //        if(player.CheckCollision(map_data)) {
 //            if (map_data.object[player.GetTilePosY()][player.GetTilePosX()] == TRAP) {

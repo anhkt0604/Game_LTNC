@@ -27,7 +27,7 @@ void Explosion::Render(SDL_Renderer *screen) {
 }
 
 bool Explosion::LoadImg(const string &path, SDL_Renderer *screen) {
-    bool ret = gameObject::LoadImg(path, screen, 0, 0, 0);
+    bool ret = gameObject::LoadImg(path, screen, 0,0,0);
     if (ret) {
         width_frame = rect.w / EXPLOSION_FRAME_NUMBER;
         height_frame = rect.h;

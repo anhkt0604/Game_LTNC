@@ -110,6 +110,16 @@ void GameMap::GetObject(int &id, const int i, const int j) {
         tmp.type = TRAP;
         tmp.isMoving = false;
         threat_list.push_back(tmp);
+    } else if (id == KEY_TILE) {
+        id = 0;
+        gMap.object[i][j] = KEY_TILE;
+        key.x = j * TILE_SIZE;
+        key.y = i * TILE_SIZE;
+    } else if (id == DOOR_TILE) {
+        id = 0;
+        gMap.object[i][j] = DOOR_TILE;
+        door.x = j * TILE_SIZE;
+        door.y = i * TILE_SIZE;
     }
 }
 //
@@ -158,7 +168,7 @@ vector<item *> GameMap::GetCoinList(SDL_Renderer* renderer) {
     vector <item*> list_coins;
 
     for (int i = 0; i < coin_list.size(); i++) {
-        item* p_coin = new item();
+        item* p_coin = new item("coin");
         p_coin->LoadImg(COIN_DIR, renderer);
         p_coin->SetTilePos(coin_list[i]);
         p_coin->set_clips();
@@ -194,6 +204,29 @@ vector<threat *> GameMap::GetThreatList(SDL_Renderer* renderer) {
     }
 
     return list_threats;
+}
+
+item *GameMap::GetDoor(SDL_Renderer *renderer) {
+    item* p_door = new item("door");
+    p_door->SetTilePos(door);
+    p_door->LoadImg(DOOR_DIR, renderer);
+    p_door->set_clips();
+    p_door->setX_pos(door.x);
+    p_door->setY_pos(door.y);
+    p_door->setInputLeft(0);
+
+    return p_door;
+}
+
+item *GameMap::GetKey(SDL_Renderer *renderer) {
+    item* p_key = new item("key");
+    p_key->SetTilePos(key);
+    p_key->LoadImg(KEY_DIR, renderer);
+    p_key->set_clips();
+    p_key->setX_pos(key.x);
+    p_key->setY_pos(key.y);
+
+    return p_key;
 }
 
 
