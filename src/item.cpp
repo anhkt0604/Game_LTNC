@@ -50,10 +50,9 @@ item::item(string type) {
 }
 
 item::~item() {
-//    Free();
 }
 
-bool item::LoadImg(string path, SDL_Renderer* screen) {   // giống character ?
+bool item::LoadImg(string path, SDL_Renderer* screen) {
     int frame_number;
     if (object_name == "coin") {
         frame_number = COIN_FRAME_NUMBER;
@@ -68,7 +67,7 @@ bool item::LoadImg(string path, SDL_Renderer* screen) {   // giống character ?
     return ret;
 }
 
-void item::set_clips() {    //
+void item::set_clips() {
     int frame_number;
     if (object_name == "coin") {
         frame_number = COIN_FRAME_NUMBER;
@@ -86,7 +85,7 @@ void item::set_clips() {    //
     }
 }
 
-void item::Render(SDL_Renderer *screen) {  // khac character 1 xiu?
+void item::Render(SDL_Renderer *screen) {
     int frame_number;
     if (object_name == "coin") {
         frame_number = COIN_FRAME_NUMBER;
@@ -110,12 +109,12 @@ void item::DoCoin(Map &map_data) {
     if (come_back_time == 0) {
         x_val = 0;
         y_val += GRAVITY_SPEED;
-        if (y_val >= MAX_FALL_SPEED) y_val = MAX_FALL_SPEED;   // coin dung im 1 cho
+        if (y_val >= MAX_FALL_SPEED) y_val = MAX_FALL_SPEED;
 
         if (input_type.left == 1) {
-            x_val -= PLAYER_SPEED;     // Note: add new constant coin_SPEED?
+            x_val -= PLAYER_SPEED;     
         } else if (input_type.right == 1) {
-            x_val += PLAYER_SPEED;     // Note: add new constant coin_SPEED?
+            x_val += PLAYER_SPEED;
         }
 
         CheckToMap(map_data);

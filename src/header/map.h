@@ -33,18 +33,9 @@ public:
 
     item* GetDoor(SDL_Renderer* renderer);
     item* GetKey(SDL_Renderer* renderer);
-
-
+    
     Map getMap() { return gMap; }
     void setMap(Map &map) { gMap = map; }
-//    void render();
-//    void free();
-//    int getWidth();
-//    int getHeight();
-//    tile* getTile(int x, int y);
-
-//    int GetThreatIndex(TilePos pos) { return threat_map[pos]; }
-//    int GetCoinIndex(TilePos pos) { return coin_map[pos]; }
 
 private:
     Map gMap;
@@ -55,9 +46,6 @@ private:
 
     TilePos key;
     TilePos door;
-
-//    map<TilePos, int> coin_map;
-//    map<TilePos, int> threat_map;
 
     void GetObject(int &id, const int i, const int j);
 };

@@ -31,7 +31,6 @@ gameObject resultLose;
 Button restartButton;
 bool loadResult();
 
-// Implement timer (fps)
 timer fps_timer;
 
 void close();
@@ -50,9 +49,7 @@ int main(int argc, char* argv[]) {
     }
 
     showMenu();
-//    showResult();
 
-//    process();
     close();
 
     return 0;

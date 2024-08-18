@@ -36,7 +36,6 @@ public:
     void set_type_move(const int& type) {type_move = type;}
     void setAnimationPos(const int& a, const int& b) {animation_a = a; animation_b = b;}
     void setInputLeft(const int& val) {input_type.left = val;}
-//    void ImpMoveType(SDL_Renderer* screen);
 
     void InitThreat();
 

@@ -22,7 +22,7 @@ character::character() {
 }
 
 character::~character() {
-
+    Free();
 }
 
 
@@ -55,10 +55,6 @@ bool character::LoadImg(const string &path, SDL_Renderer *screen) {
     if (result) {
         width_frame = rect.w / PLAYER_FRAME_NUMBER;
         height_frame = rect.h;
-//        frame_clip[0].x = 0;
-//        frame_clip[0].y = 0;
-//        frame_clip[0].w = width_frame;
-//        frame_clip[0].h = height_frame;
     }
     return result;
 }
@@ -152,18 +148,12 @@ void character::DoPlayer(Map &map_data) {
             // after die, come back the position before die
             if (x_pos > 0) {
                 x_pos -= 6* TILE_SIZE;     // 6 tiles
-                // NEW IDEA: check if x_pos is a hole or not, if yes, move to the left until x_pos is not a hole
-//                while (map_data.tile[MAX_MAP_Y][ (int) x_pos / TILE_SIZE] != BLANK_TILE) {
-//                    x_pos -= TILE_SIZE;
-//                }
             } else {
                 x_pos = 0;
             }
             y_pos = START_GAME_Y_POS;
             x_val = 0;
             y_val = 0;
-//            map_x = 0;
-//            map_y = 0;
         }
     }
 }
@@ -272,12 +262,6 @@ void character::UpdatePlayerImage(SDL_Renderer *screen) {
         } else {
             LoadImg(PLAYER_IDLE, screen);
         }
-    } else {  // Jump
-//        if (status == RIGHT) {
-//            LoadImg(PLAYER_JUMP_RIGHT, screen);
-//        } else if (status == LEFT) {
-//            LoadImg(PLAYER_JUMP_LEFT, screen);
-//        }
     }
 }
 
@@ -312,31 +296,6 @@ void character::SetStatus(const int &state) {
         come_back_time = 30;
     }
 }
-
-
-//bool character::CheckCollision(const Map &map_data) {
-//    // x, y là vị trí của tile mà player đang đứng
-//    SetTilePos();
-//
-//    int x = tile_pos.x;
-//    int y = tile_pos.y;
-//
-//    if (map_data.object[y][x] == TRAP) {
-//        SetStatus(DEAD);
-//        return true;
-//    } else if (map_data.object[y][x] == COIN) {
-//        UpdateItems(COIN);
-//        return true;
-//    }
-//
-//    return false;
-//}
-//
-//void character::SetTilePos() {
-//    int height_min = min(height_frame, TILE_SIZE);
-//    tile_pos.x = (x_pos + x_val + width_frame - 1) / TILE_SIZE - 1;
-//    tile_pos.y = (y_pos + height_min - 1) / TILE_SIZE;
-//}
 
 TilePos character::GetTilePos() {
     TilePos result;

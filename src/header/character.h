@@ -24,14 +24,7 @@ public:
     void UpdateMap(const int x, const int y) { map_x = x; map_y = y; }
     void UpdatePlayerImage(SDL_Renderer* screen);
     void UpdateItems(itemType type);
-    void SetComeBackTime(const int& cb_time) { come_back_time = cb_time; }
     void SetStatus(const int& state);
-
-//    bool CheckCollision(const Map& map_data);
-
-//    int GetTilePosX() const { return tile_pos.x; }
-//    int GetTilePosY() const { return tile_pos.y; }
-//    TilePos GetTilePos() const { return tile_pos; }
 
     SDL_Rect GetRectFrame();
     TilePos GetTilePos();
