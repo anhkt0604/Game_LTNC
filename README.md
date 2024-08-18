@@ -41,6 +41,8 @@ Tải game (được nén thành .zip) đường link sau: (hiện đang update)
 
 ## Cách chơi
 
+![image.png](res/screen_shot/image4.png)
+
 #### Sử Dụng Các Phím Mũi Tên Để Di Chuyển Nhân Vật
 
 Nhấn các phím mũi tên **lên**, **trái**, và **phải** để di chuyển nhân vật của bạn trong thế giới game. Mỗi phím sẽ tương ứng với một hướng di chuyển, giúp bạn điều khiển nhân vật đi qua các chướng ngại vật và tiến gần hơn đến mục tiêu của mình.
@@ -71,6 +73,7 @@ Mục tiêu cuối cùng của bạn là tìm ra chiếc chìa khóa ẩn giấu
 - Các icon, hình ảnh được dùng trong mục How To Play: [flaticon.com](https://flaticon.com/)
 - Font chữ [Jetbrain Mono](https://fonts.google.com/specimen/JetBrains+Mono) và [Starborn](https://www.dafont.com/starborn.font)
 
+*File thiết kế giao diện & đồ họa nhân vật* [tại đây](https://github.com/anhkt0604/INT2215-game/blob/cb881020736e79914018edf28302a206c87dea21/res/illustrator)
 ### Âm thanh
 - Sound lấy trên kênh youtube [@heyitscriz](https://www.youtube.com/@heyitscriz)
 
