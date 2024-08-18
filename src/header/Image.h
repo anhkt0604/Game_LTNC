@@ -9,6 +9,8 @@
 
 class Image {
 public:
+    Image() : texture(nullptr), renderer(nullptr), width(0), height(0) {}
+
     Image(const std::string& filePath, SDL_Renderer* renderer)
             : texture(nullptr), renderer(renderer) {
         // Load image from specified path

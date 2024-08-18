@@ -15,6 +15,7 @@ string getPath();
 const string PROJECT_SOURCE_DIR = getPath();
 const string ICON = PROJECT_SOURCE_DIR + "res/icon.png";
 const string BACKGROUND = PROJECT_SOURCE_DIR + "res/background.png";
+const string MENU_BACKGROUND = PROJECT_SOURCE_DIR + "res/menu_background.png";
 const string MAP = PROJECT_SOURCE_DIR + "res/map/map01.dat";
 const string PLAYER_RIGHT = PROJECT_SOURCE_DIR + "res/player_right.png";
 const string PLAYER_LEFT = PROJECT_SOURCE_DIR + "res/player_left.png";
@@ -31,7 +32,8 @@ static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gRenderer = NULL;
 static SDL_Event gEvent;
 static SDL_Surface* gIcon = NULL;
-static TTF_Font* font_time = NULL;
+static TTF_Font* default_font = NULL;
+static TTF_Font* result_font = NULL;
 
 // Screen dimension constants
 const int SCREEN_WIDTH = 1280;

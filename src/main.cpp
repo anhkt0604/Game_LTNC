@@ -7,17 +7,33 @@
 #include "header/explosion.h"
 #include "header/text.h"
 #include "header/Image.h"
+#include "header/Button.h"
 
 bool initSDL();
 
 gameObject gBackground;
 bool loadBackground();
 
+int result_score;
+bool win = false;
+
+gameObject menuBackground;
+Button playButton;
+Button exitButton;
+bool loadMenu();
+
+gameObject resultWin;
+gameObject resultLose;
+Button restartButton;
+bool loadResult();
+
 // Implement timer (fps)
 timer fps_timer;
 
 void close();
 void process();
+void showMenu();
+void showResult();
 
 int main(int argc, char* argv[]) {
     if (!initSDL()) {
@@ -27,9 +43,20 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    process();
+    if (!loadMenu()) {
+        return -1;
+    }
 
+    if (!loadResult()) {
+        return -1;
+    }
+
+    showMenu();
+    showResult();
+
+//    process();
     close();
+
     return 0;
 }
 
@@ -90,8 +117,14 @@ bool initSDL() {
         success = false;
     }
 
-    font_time = TTF_OpenFont((PROJECT_SOURCE_DIR + "res/font/JetBrainsMono-Bold.ttf").c_str(), 25);
-    if (font_time == NULL) {
+    default_font = TTF_OpenFont((PROJECT_SOURCE_DIR + "res/font/JetBrainsMono-Bold.ttf").c_str(), 25);
+    if (default_font == NULL) {
+        cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << endl;
+        success = false;
+    }
+
+    result_font = TTF_OpenFont((PROJECT_SOURCE_DIR + "res/font/JetBrainsMono-ExtraBold.ttf").c_str(), 40);
+    if (result_font == NULL) {
         cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << endl;
         success = false;
     }
@@ -108,9 +141,57 @@ bool loadBackground() {
     return success;
 }
 
+bool loadMenu() {
+    bool success = true;
+    if (!menuBackground.LoadImg(MENU_BACKGROUND, gRenderer)) {
+        cout << "Failed to load background image!" << endl;
+        success = false;
+    }
+
+    if (!playButton.loadImage(PROJECT_SOURCE_DIR + "res/play_button.png", gRenderer)) {
+        cout << "Failed to load start button image!" << endl;
+        success = false;
+    } else {
+        playButton.setPosition(520,374);
+    }
+
+    if (!exitButton.loadImage(PROJECT_SOURCE_DIR + "res/exit_button.png", gRenderer)) {
+        cout << "Failed to load exit button image!" << endl;
+        success = false;
+    } else {
+        exitButton.setPosition(520, 374 + 90);
+    }
+
+    return success;
+}
+
+bool loadResult() {
+    bool success = true;
+    if (!resultWin.LoadImg(PROJECT_SOURCE_DIR + "res/result_win.png", gRenderer)) {
+        cout << "Failed to load result screen image!" << endl;
+        success = false;
+    }
+    if(!resultLose.LoadImg(PROJECT_SOURCE_DIR + "res/result_lose.png", gRenderer)) {
+        cout << "Failed to load result screen image!" << endl;
+        success = false;
+    }
+
+    if (!restartButton.loadImage(PROJECT_SOURCE_DIR + "res/restart_button.png", gRenderer)) {
+        cout << "Failed to load restart button image!" << endl;
+        success = false;
+    } else {
+        restartButton.setPosition(520,374);
+    }
+
+    return success;
+}
+
 void close() {
     // Free loaded images
     gBackground.Free();
+    menuBackground.Free();
+    resultWin.Free();
+    resultLose.Free();
 
     // Destroy window
     SDL_DestroyRenderer(gRenderer);
@@ -124,6 +205,9 @@ void close() {
 }
 
 void process() {
+    bool quit = false;
+    win = false;
+
     GameMap game_map;
     game_map.LoadMap((char*)MAP.c_str());
     game_map.LoadTiles(gRenderer);
@@ -131,8 +215,6 @@ void process() {
     character player;
     player.LoadImg(PLAYER_IDLE, gRenderer);
     player.set_clips();
-
-    bool quit = false;
 
     vector<threat*> list_threats = game_map.GetThreatList(gRenderer);
     vector<item*> list_coins = game_map.GetCoinList(gRenderer);
@@ -148,9 +230,10 @@ void process() {
     explosion.set_clips();
 
     // Text
-    text scoreText, chanceText;
+    text scoreText, chanceText, notificationText;
     scoreText.SetColor(text::BLACK_TEXT);
     chanceText.SetColor(text::BLACK_TEXT);
+    notificationText.SetColor(text::RED_TEXT);
 
     Image CoinImage(PROJECT_SOURCE_DIR + "res/coin_image.png", gRenderer);
     Image ChanceImage(PROJECT_SOURCE_DIR + "res/heart.png", gRenderer);
@@ -161,12 +244,15 @@ void process() {
         while (SDL_PollEvent(&gEvent) != 0) {
             if (gEvent.type == SDL_QUIT) {
                 quit = true;
+                close();
             }
             player.HandleInputAction(gEvent, gRenderer);
         }
 
         if (player.isDead()) {
             cout << "Game Over!" << endl;
+            result_score = player.GetScore();
+            win = false;
             quit = true;
         }
 
@@ -184,9 +270,14 @@ void process() {
         if (utils::CheckCollision(player.GetTilePos(), door->GetTilePos())) {
             if (player.GetKey()) {
                 cout << "You win!" << endl;
+                result_score = player.GetScore();
+                win = true;
                 quit = true;
             } else {
                 cout << "You need a key to open the door!" << endl;
+                notificationText.SetText("You need a key to open the door!");
+                notificationText.LoadFromRenderedText(default_font, gRenderer);
+                notificationText.RenderText(gRenderer, SCREEN_WIDTH / 2 - notificationText.GetWidth() / 2, 20);
             }
         }
 
@@ -246,39 +337,16 @@ void process() {
         }
 
 
-
-//        if(player.CheckCollision(map_data)) {
-//            if (map_data.object[player.GetTilePosY()][player.GetTilePosX()] == TRAP) {
-//                cout << "Collision detected!" << endl;
-//                for (int i = 0; i < EXPLOSION_FRAME_NUMBER; i++) {
-//                    explosion.set_frame(i);
-//                    explosion.SetRect(player.GetRectFrame().x, player.GetRectFrame().y);
-//                    explosion.Render(gRenderer);
-//                }
-//                int index = game_map.GetThreatIndex({player.GetTilePosX(), player.GetTilePosY()});
-//                list_threats[index]->Free();
-//                list_threats.erase(list_threats.begin() + index);
-//                player.SetStatus(character::MoveType::DEAD);
-//            }
-//            else if (map_data.object[player.GetTilePosY()][player.GetTilePosX()] == COIN) {
-//                int index = game_map.GetCoinIndex({player.GetTilePosX(), player.GetTilePosY()});
-//                list_coins[index]->Free();
-//                list_coins.erase(list_coins.begin() + index);
-//                player.UpdateItems(COIN);
-//
-//            }
-//        }
-
         // Render text
         chanceText.SetText("Chance:");
-        chanceText.LoadFromRenderedText(font_time, gRenderer);
+        chanceText.LoadFromRenderedText(default_font, gRenderer);
         chanceText.RenderText(gRenderer, 30, 20);
         for (int i = 0; i < player.GetHeart(); i++) {
             ChanceImage.render(30 + chanceText.GetWidth() + 10 + i * 30, 24, 25, 25);
         }
 
         scoreText.SetText("Score: " + to_string(player.GetScore()));
-        scoreText.LoadFromRenderedText(font_time, gRenderer);
+        scoreText.LoadFromRenderedText(default_font, gRenderer);
         scoreText.RenderText(gRenderer, SCREEN_WIDTH - scoreText.GetWidth() - 60, 20);
         if (player.GetScore() >= 10) {
             CoinImage.render(SCREEN_WIDTH - scoreText.GetWidth() + 85, 24, 25, 25);
@@ -293,5 +361,124 @@ void process() {
         if (real_time < frame_time) {
             SDL_Delay(frame_time - real_time);
         }
+    }
+}
+
+void showMenu() {
+    bool quit = false;
+
+    while (!quit) {
+        while (SDL_PollEvent(&gEvent) != 0) {
+            if (gEvent.type == SDL_QUIT) {
+                quit = true;
+            }
+
+            // Handle button events
+            if (playButton.handleEvent(&gEvent)) {
+                process();
+                quit = true;
+            }
+
+            if (exitButton.handleEvent(&gEvent)) {
+                quit = true;
+            }
+
+            if (playButton.isHover(&gEvent)) {
+                // button zoom out
+                playButton.loadImage(PROJECT_SOURCE_DIR + "res/play_button_hover.png", gRenderer);
+            } else {
+                // button zoom in
+                playButton.loadImage(PROJECT_SOURCE_DIR + "res/play_button.png", gRenderer);
+            }
+
+            if (exitButton.isHover(&gEvent)) {
+                // button zoom out
+                exitButton.loadImage(PROJECT_SOURCE_DIR + "res/exit_button_hover.png", gRenderer);
+            } else {
+                // button zoom in
+                exitButton.loadImage(PROJECT_SOURCE_DIR + "res/exit_button.png", gRenderer);
+            }
+        }
+
+        // Clear screen
+        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(gRenderer);
+
+        // Render menu background
+        menuBackground.Render(gRenderer, NULL);
+
+        // Render start button
+        playButton.render(gRenderer);
+
+        // Render exit button
+        exitButton.render(gRenderer);
+
+        // Update screen
+        SDL_RenderPresent(gRenderer);
+    }
+}
+
+void showResult() {
+    bool quit = false;
+
+    while (!quit) {
+        while (SDL_PollEvent(&gEvent) != 0) {
+            if (gEvent.type == SDL_QUIT) {
+                quit = true;
+            }
+
+            // Handle button events
+            if (restartButton.handleEvent(&gEvent)) {
+                process();
+            }
+
+            if (exitButton.handleEvent(&gEvent)) {
+                quit = true;
+            }
+
+            if (restartButton.isHover(&gEvent)) {
+                // button zoom out
+                restartButton.loadImage(PROJECT_SOURCE_DIR + "res/restart_button_hover.png", gRenderer);
+            } else {
+                // button zoom in
+                restartButton.loadImage(PROJECT_SOURCE_DIR + "res/restart_button.png", gRenderer);
+            }
+
+            if (exitButton.isHover(&gEvent)) {
+                // button zoom out
+                exitButton.loadImage(PROJECT_SOURCE_DIR + "res/exit_button_hover.png", gRenderer);
+            } else {
+                // button zoom in
+                exitButton.loadImage(PROJECT_SOURCE_DIR + "res/exit_button.png", gRenderer);
+            }
+        }
+
+        // Clear screen
+        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(gRenderer);
+
+        // Render result screen
+        if (win) {
+            resultWin.Render(gRenderer, NULL);
+        } else {
+            resultLose.Render(gRenderer, NULL);
+        }
+
+        // Render restart button
+        restartButton.render(gRenderer);
+
+        // Render exit button
+        exitButton.render(gRenderer);
+
+
+        // Render score
+        text scoreText;
+        scoreText.SetColor(text::BLACK_TEXT);
+        scoreText.SetText("Your score: " + to_string(result_score));
+        scoreText.LoadFromRenderedText(result_font, gRenderer);
+        scoreText.RenderText(gRenderer, SCREEN_WIDTH / 2 - scoreText.GetWidth() / 2 - 10, 250);
+
+        // Update screen
+        SDL_RenderPresent(gRenderer);
     }
 }

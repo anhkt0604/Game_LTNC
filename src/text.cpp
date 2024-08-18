@@ -25,7 +25,7 @@ void text::Free() {
 void text::SetColor(const int &type) {
     switch (type) {
         case RED_TEXT:
-            color = {255, 0, 0};
+            color = {227, 54, 54};
             break;
         case WHITE_TEXT:
             color = {255, 255, 255};

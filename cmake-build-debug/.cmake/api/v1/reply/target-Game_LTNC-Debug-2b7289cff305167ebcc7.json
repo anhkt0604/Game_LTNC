@@ -54,7 +54,7 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 51,
+				"line" : 53,
 				"parent" : 0
 			},
 			{
@@ -121,7 +121,8 @@
 				11,
 				13,
 				15,
-				16
+				16,
+				19
 			]
 		}
 	],
@@ -202,7 +203,8 @@
 				11,
 				13,
 				15,
-				16
+				16,
+				19
 			]
 		},
 		{
@@ -217,7 +219,8 @@
 				12,
 				14,
 				17,
-				18
+				18,
+				20
 			]
 		}
 	],
@@ -326,6 +329,17 @@
 		{
 			"backtrace" : 1,
 			"path" : "src/header/Image.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/Button.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/header/Button.h",
 			"sourceGroupIndex" : 1
 		}
 	],

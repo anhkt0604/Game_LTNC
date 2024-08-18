@@ -12,6 +12,8 @@ public:
     inline void SetRect(const int& x, const int& y) { rect.x = x; rect.y = y; }
     int GetWidth() const { return rect.w; }
     int GetHeight() const { return rect.h; }
+    void SetWidth(const int& w) { rect.w = w; }
+    void SetHeight(const int& h) { rect.h = h; }
     SDL_Rect GetRect() const { return rect; }
     SDL_Texture* GetTexture() const { return object; }
 

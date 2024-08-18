@@ -46,6 +46,8 @@ add_executable(Game_LTNC src/main.cpp
         src/text.cpp
         src/header/text.h
         src/header/Image.h
+        src/Button.cpp
+        src/header/Button.h
 )
 
 target_link_libraries(Game_LTNC SDL2main SDL2 SDL2_image SDL2_ttf)
