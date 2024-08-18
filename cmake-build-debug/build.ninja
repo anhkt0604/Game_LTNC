@@ -52,63 +52,70 @@ build cmake_object_order_depends_target_Game_LTNC: phony || CMakeFiles/Game_LTNC
 build CMakeFiles/Game_LTNC.dir/src/main.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/main.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\main.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
 build CMakeFiles/Game_LTNC.dir/src/gameObject.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/gameObject.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\gameObject.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
 build CMakeFiles/Game_LTNC.dir/src/map.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/map.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\map.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
 build CMakeFiles/Game_LTNC.dir/src/utils.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/utils.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\utils.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
 build CMakeFiles/Game_LTNC.dir/src/character.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/character.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\character.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
 build CMakeFiles/Game_LTNC.dir/src/timer.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/timer.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\timer.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
 build CMakeFiles/Game_LTNC.dir/src/threat.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/threat.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\threat.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
 build CMakeFiles/Game_LTNC.dir/src/item.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/item.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\item.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
 build CMakeFiles/Game_LTNC.dir/src/Explosion.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/Explosion.cpp || cmake_object_order_depends_target_Game_LTNC
   DEP_FILE = CMakeFiles\Game_LTNC.dir\src\Explosion.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include"
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
+  OBJECT_DIR = CMakeFiles\Game_LTNC.dir
+  OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
+
+build CMakeFiles/Game_LTNC.dir/src/text.cpp.obj: CXX_COMPILER__Game_LTNC_unscanned_Debug D$:/My$ Code/Game_LTNC/src/text.cpp || cmake_object_order_depends_target_Game_LTNC
+  DEP_FILE = CMakeFiles\Game_LTNC.dir\src\text.cpp.obj.d
+  FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
+  INCLUDES = -I"D:/My Code/Game_LTNC/libs/SDL/include" -I"D:/My Code/Game_LTNC/libs/SDL_image/include" -I"D:/My Code/Game_LTNC/libs/SDL_ttf/include"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   OBJECT_FILE_DIR = CMakeFiles\Game_LTNC.dir\src
 
@@ -120,10 +127,10 @@ build CMakeFiles/Game_LTNC.dir/src/Explosion.cpp.obj: CXX_COMPILER__Game_LTNC_un
 #############################################
 # Link the executable Game_LTNC.exe
 
-build Game_LTNC.exe: CXX_EXECUTABLE_LINKER__Game_LTNC_Debug CMakeFiles/Game_LTNC.dir/src/main.cpp.obj CMakeFiles/Game_LTNC.dir/src/gameObject.cpp.obj CMakeFiles/Game_LTNC.dir/src/map.cpp.obj CMakeFiles/Game_LTNC.dir/src/utils.cpp.obj CMakeFiles/Game_LTNC.dir/src/character.cpp.obj CMakeFiles/Game_LTNC.dir/src/timer.cpp.obj CMakeFiles/Game_LTNC.dir/src/threat.cpp.obj CMakeFiles/Game_LTNC.dir/src/item.cpp.obj CMakeFiles/Game_LTNC.dir/src/Explosion.cpp.obj
+build Game_LTNC.exe: CXX_EXECUTABLE_LINKER__Game_LTNC_Debug CMakeFiles/Game_LTNC.dir/src/main.cpp.obj CMakeFiles/Game_LTNC.dir/src/gameObject.cpp.obj CMakeFiles/Game_LTNC.dir/src/map.cpp.obj CMakeFiles/Game_LTNC.dir/src/utils.cpp.obj CMakeFiles/Game_LTNC.dir/src/character.cpp.obj CMakeFiles/Game_LTNC.dir/src/timer.cpp.obj CMakeFiles/Game_LTNC.dir/src/threat.cpp.obj CMakeFiles/Game_LTNC.dir/src/item.cpp.obj CMakeFiles/Game_LTNC.dir/src/Explosion.cpp.obj CMakeFiles/Game_LTNC.dir/src/text.cpp.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  LINK_PATH = -L"D:/My Code/Game_LTNC/libs/SDL/lib/x86"   -L"D:/My Code/Game_LTNC/libs/SDL_image/lib/x86"
+  LINK_LIBRARIES = -lSDL2main  -lSDL2  -lSDL2_image  -lSDL2_ttf  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_PATH = -L"D:/My Code/Game_LTNC/libs/SDL/lib/x86"   -L"D:/My Code/Game_LTNC/libs/SDL_image/lib/x86"   -L"D:/My Code/Game_LTNC/libs/SDL_ttf/lib/x86"
   OBJECT_DIR = CMakeFiles\Game_LTNC.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

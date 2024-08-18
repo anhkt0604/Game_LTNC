@@ -39,7 +39,7 @@ public:
     int GetHeart() const { return heart; }
     int GetScore() const { return score; }
     void useHeart() { heart--; }
-    bool isDead() { return heart < 0; }
+    bool isDead() { return heart == 0; }
     void AddHeart() { heart++; }
     void AddScore() { score++; }
 

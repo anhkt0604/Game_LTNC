@@ -5,6 +5,8 @@
 #include "header/timer.h"
 #include "header/threat.h"
 #include "header/explosion.h"
+#include "header/text.h"
+#include "header/Image.h"
 
 bool initSDL();
 
@@ -82,6 +84,18 @@ bool initSDL() {
         }
     }
 
+    // Init SDL_TTF
+    if (TTF_Init() == -1) {
+        cout << "SDL_ttf could not initialize! SDL_ttf Error: " << TTF_GetError() << endl;
+        success = false;
+    }
+
+    font_time = TTF_OpenFont((PROJECT_SOURCE_DIR + "res/font/JetBrainsMono-Bold.ttf").c_str(), 25);
+    if (font_time == NULL) {
+        cout << "Failed to load font! SDL_ttf Error: " << TTF_GetError() << endl;
+        success = false;
+    }
+
     return success;
 }
 
@@ -132,6 +146,15 @@ void process() {
         quit = true;
     }
     explosion.set_clips();
+
+    // Text
+    text scoreText, chanceText;
+    scoreText.SetColor(text::BLACK_TEXT);
+    chanceText.SetColor(text::BLACK_TEXT);
+
+    Image CoinImage(PROJECT_SOURCE_DIR + "res/coin_image.png", gRenderer);
+    Image ChanceImage(PROJECT_SOURCE_DIR + "res/heart.png", gRenderer);
+
 
     while(!quit) {
         fps_timer.start();
@@ -245,6 +268,23 @@ void process() {
 //
 //            }
 //        }
+
+        // Render text
+        chanceText.SetText("Chance:");
+        chanceText.LoadFromRenderedText(font_time, gRenderer);
+        chanceText.RenderText(gRenderer, 30, 20);
+        for (int i = 0; i < player.GetHeart(); i++) {
+            ChanceImage.render(30 + chanceText.GetWidth() + 10 + i * 30, 24, 25, 25);
+        }
+
+        scoreText.SetText("Score: " + to_string(player.GetScore()));
+        scoreText.LoadFromRenderedText(font_time, gRenderer);
+        scoreText.RenderText(gRenderer, SCREEN_WIDTH - scoreText.GetWidth() - 60, 20);
+        if (player.GetScore() >= 10) {
+            CoinImage.render(SCREEN_WIDTH - scoreText.GetWidth() + 85, 24, 25, 25);
+        } else {
+            CoinImage.render(SCREEN_WIDTH - scoreText.GetWidth() + 70, 24, 25, 25);
+        }
 
         SDL_RenderPresent(gRenderer);
 

@@ -7,6 +7,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <vector>
+#include <SDL_ttf.h>
 using namespace std;
 
 string getPath();
@@ -30,6 +31,7 @@ static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gRenderer = NULL;
 static SDL_Event gEvent;
 static SDL_Surface* gIcon = NULL;
+static TTF_Font* font_time = NULL;
 
 // Screen dimension constants
 const int SCREEN_WIDTH = 1280;
