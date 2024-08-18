@@ -8,6 +8,7 @@
 #include <SDL_image.h>
 #include <vector>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 using namespace std;
 
 string getPath();
@@ -63,6 +64,13 @@ const int FRAME_PER_SECOND = 20;
 #define START_GAME_Y_POS 200
 #define START_GAME_X_POS 100
 
+// Audio
+const string COIN_SOUND = PROJECT_SOURCE_DIR + "res/audio/Bling.wav";
+const string EXPLOSION_SOUND = PROJECT_SOURCE_DIR + "res/audio/Blip Bleep.wav";
+
+static Mix_Chunk* coin_sound = NULL;
+static Mix_Chunk* explosion_sound = NULL;
+
 enum itemType {COIN = 4, HEART = 7, DOOR = 8, KEY = 6};
 enum threatType {TRAP = 5};
 
@@ -112,6 +120,7 @@ typedef struct itemTile : TilePos {
 namespace utils {
     bool CheckCollision(TilePos object1, TilePos object2);
 }
+
 
 
 #endif //GAME_LTNC_UTILS_H

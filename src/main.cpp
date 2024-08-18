@@ -18,9 +18,13 @@ int result_score;
 bool win = false;
 
 gameObject menuBackground;
+gameObject HowToPlay;
 Button playButton;
 Button exitButton;
+Button Q_button;
+Button OK_button;
 bool loadMenu();
+bool loadHowToPlay();
 
 gameObject resultWin;
 gameObject resultLose;
@@ -34,25 +38,19 @@ void close();
 void process();
 void showMenu();
 void showResult();
+void showHowToPlay();
 
 int main(int argc, char* argv[]) {
     if (!initSDL()) {
         return -1;
     }
-    if (!loadBackground()) {
-        return -1;
-    }
 
-    if (!loadMenu()) {
-        return -1;
-    }
-
-    if (!loadResult()) {
+    if (!loadBackground() || !loadMenu() || !loadResult() || !loadHowToPlay()) {
         return -1;
     }
 
     showMenu();
-    showResult();
+//    showResult();
 
 //    process();
     close();
@@ -129,6 +127,19 @@ bool initSDL() {
         success = false;
     }
 
+    // init SDL_Mixer
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
+        success = false;
+    }
+
+    coin_sound = Mix_LoadWAV((COIN_SOUND).c_str());
+    explosion_sound = Mix_LoadWAV((EXPLOSION_SOUND).c_str());
+    if (coin_sound == NULL || explosion_sound == NULL) {
+        cout << "Failed to load sound effect! SDL_mixer Error: " << Mix_GetError() << endl;
+        success = false;
+    }
+
     return success;
 }
 
@@ -160,6 +171,31 @@ bool loadMenu() {
         success = false;
     } else {
         exitButton.setPosition(520, 374 + 90);
+    }
+
+    if (!Q_button.loadImage(PROJECT_SOURCE_DIR + "res/Q_button.png", gRenderer)) {
+        cout << "Failed to load Q button image!" << endl;
+        success = false;
+    } else {
+        Q_button.setPosition(1200, 640 - 80);
+    }
+
+
+    return success;
+}
+
+bool loadHowToPlay() {
+    bool success = true;
+    if (!HowToPlay.LoadImg(PROJECT_SOURCE_DIR + "res/tutorial.png", gRenderer)) {
+        cout << "Failed to load how to play image!" << endl;
+        success = false;
+    }
+
+    if (!OK_button.loadImage(PROJECT_SOURCE_DIR + "res/OK_button.png", gRenderer)) {
+        cout << "Failed to load OK button image!" << endl;
+        success = false;
+    } else {
+        OK_button.setPosition(520, 374 + 140);
     }
 
     return success;
@@ -253,6 +289,8 @@ void process() {
             cout << "Game Over!" << endl;
             result_score = player.GetScore();
             win = false;
+
+            showResult();
             quit = true;
         }
 
@@ -272,6 +310,8 @@ void process() {
                 cout << "You win!" << endl;
                 result_score = player.GetScore();
                 win = true;
+
+                showResult();
                 quit = true;
             } else {
                 cout << "You need a key to open the door!" << endl;
@@ -306,6 +346,7 @@ void process() {
                 // Check collision
                 if (utils::CheckCollision(player.GetTilePos(), p_threat->GetTilePos())) {
                     cout << "Collision detected!" << endl;
+                    Mix_PlayChannel(-1, explosion_sound, 0);
                     for (int i = 0; i < EXPLOSION_FRAME_NUMBER; i++) {
                         explosion.set_frame(i);
                         explosion.SetRect(player.GetRectFrame().x, player.GetRectFrame().y);
@@ -329,6 +370,7 @@ void process() {
 
                 if (utils::CheckCollision(player.GetTilePos(), p_coin->GetTilePos())) {
                     cout << "Collision detected!" << endl;
+                    Mix_PlayChannel(-1, coin_sound, 0);
                     p_coin->Free();
                     list_coins.erase(list_coins.begin() + i);
                     player.UpdateItems(COIN);
@@ -373,6 +415,11 @@ void showMenu() {
                 quit = true;
             }
 
+            if (Q_button.handleEvent(&gEvent)) {
+                showHowToPlay();
+                quit = true;
+            }
+
             // Handle button events
             if (playButton.handleEvent(&gEvent)) {
                 process();
@@ -412,6 +459,9 @@ void showMenu() {
 
         // Render exit button
         exitButton.render(gRenderer);
+
+        // Render Q button
+        Q_button.render(gRenderer);
 
         // Update screen
         SDL_RenderPresent(gRenderer);
@@ -477,6 +527,47 @@ void showResult() {
         scoreText.SetText("Your score: " + to_string(result_score));
         scoreText.LoadFromRenderedText(result_font, gRenderer);
         scoreText.RenderText(gRenderer, SCREEN_WIDTH / 2 - scoreText.GetWidth() / 2 - 10, 250);
+
+        // Update screen
+        SDL_RenderPresent(gRenderer);
+    }
+}
+
+void showHowToPlay() {
+    bool quit = false;
+
+    while (!quit) {
+        while (SDL_PollEvent(&gEvent) != 0) {
+            if (gEvent.type == SDL_QUIT) {
+                quit = true;
+            }
+
+            // Handle button events
+
+            if (OK_button.handleEvent(&gEvent)) {
+                showMenu();
+                quit = true;
+            }
+
+
+            if (OK_button.isHover(&gEvent)) {
+                // button zoom out
+                OK_button.loadImage(PROJECT_SOURCE_DIR + "res/OK_button_hover.png", gRenderer);
+            } else {
+                // button zoom in
+                OK_button.loadImage(PROJECT_SOURCE_DIR + "res/OK_button.png", gRenderer);
+            }
+        }
+
+        // Clear screen
+        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(gRenderer);
+
+        // Render how to play screen
+        HowToPlay.Render(gRenderer, NULL);
+
+        // Render OK button
+        OK_button.render(gRenderer);
 
         // Update screen
         SDL_RenderPresent(gRenderer);
