@@ -67,9 +67,11 @@ const int FRAME_PER_SECOND = 20;
 // Audio
 const string COIN_SOUND = PROJECT_SOURCE_DIR + "res/audio/Bling.wav";
 const string EXPLOSION_SOUND = PROJECT_SOURCE_DIR + "res/audio/Blip Bleep.wav";
+const string WINNER_SOUND = PROJECT_SOURCE_DIR + "res/audio/winner.wav";
 
 static Mix_Chunk* coin_sound = NULL;
 static Mix_Chunk* explosion_sound = NULL;
+static Mix_Chunk* winner_sound = NULL;
 
 enum itemType {COIN = 4, HEART = 7, DOOR = 8, KEY = 6};
 enum threatType {TRAP = 5};

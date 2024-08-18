@@ -135,7 +135,8 @@ bool initSDL() {
 
     coin_sound = Mix_LoadWAV((COIN_SOUND).c_str());
     explosion_sound = Mix_LoadWAV((EXPLOSION_SOUND).c_str());
-    if (coin_sound == NULL || explosion_sound == NULL) {
+    winner_sound = Mix_LoadWAV((WINNER_SOUND).c_str());
+    if (coin_sound == NULL || explosion_sound == NULL || winner_sound == NULL) {
         cout << "Failed to load sound effect! SDL_mixer Error: " << Mix_GetError() << endl;
         success = false;
     }
@@ -290,6 +291,7 @@ void process() {
             result_score = player.GetScore();
             win = false;
 
+            Mix_PlayChannel(-1, explosion_sound, 0);
             showResult();
             quit = true;
         }
@@ -311,6 +313,7 @@ void process() {
                 result_score = player.GetScore();
                 win = true;
 
+                Mix_PlayChannel(-1, winner_sound, 0);
                 showResult();
                 quit = true;
             } else {
@@ -322,11 +325,14 @@ void process() {
         }
 
         // Render key
-        key->SetMap(map_data.start_x, map_data.start_y);
-        key->Render(gRenderer);
-        if (utils::CheckCollision(player.GetTilePos(), key->GetTilePos())) {
-            key->Free();
-            player.SetKey(true);
+        if (!player.GetKey()) {
+            key->SetMap(map_data.start_x, map_data.start_y);
+            key->Render(gRenderer);
+            if (utils::CheckCollision(player.GetTilePos(), key->GetTilePos())) {
+                Mix_PlayChannel(-1, coin_sound, 0);
+                key->Free();
+                player.SetKey(true);
+            }
         }
 
         player.UpdateMap(map_data.start_x, map_data.start_y);
